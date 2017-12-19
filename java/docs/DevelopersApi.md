@@ -46,5 +46,5 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/xml
- - **Accept**: application/json, text/xml
+ - **Accept**: application/json, /xml
 

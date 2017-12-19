@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Leaderboard
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-18T18:09:28.205Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:23:06.463Z")
 public class Leaderboard {
   @SerializedName("id2")
   private Integer id2 = null;
