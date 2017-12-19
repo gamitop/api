@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Entity
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:23:27.472Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:23:35.301Z")
 public class Entity {
   @SerializedName("id")
   private UUID id = null;
