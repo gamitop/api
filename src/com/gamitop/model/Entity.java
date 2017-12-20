@@ -25,10 +25,10 @@ public class Entity {
 	 * @param username
 	 * @param password
 	 * @param link
-	 * @param leaderboards
+	 * @param leaderboards2
 	 */
 	public Entity(int id, String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards) {
+			ArrayList<String> leaderboards2) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -36,7 +36,7 @@ public class Entity {
 		this.username = username;
 		this.password = password;
 		this.link = link;
-		this.leaderboards = leaderboards;
+		this.leaderboards = leaderboards2;
 	}
 	public int getId() {
 		return id;
