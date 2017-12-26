@@ -9,14 +9,24 @@ package com.gamitop.model;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "entity")
+
 public class Entity {
 	
 	private int id ;
+	 
 	private String name ;
+
 	private String email;
+	 
 	private String username;
+
 	private String password;
+	
 	private String link;
+	
 	private  ArrayList<String> leaderboards = new ArrayList<String>();
 	/**
 	 * @param id
@@ -27,6 +37,9 @@ public class Entity {
 	 * @param link
 	 * @param leaderboards2
 	 */
+	
+	
+	
 	public Entity(int id, String name, String email, String username, String password, String link,
 			ArrayList<String> leaderboards2) {
 		super();
@@ -37,6 +50,12 @@ public class Entity {
 		this.password = password;
 		this.link = link;
 		this.leaderboards = leaderboards2;
+	}
+	/**
+	 * 
+	 */
+	public Entity() {
+		super();
 	}
 	public int getId() {
 		return id;

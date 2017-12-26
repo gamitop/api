@@ -21,18 +21,31 @@ public class EntityManager implements IEntity {
 	static EntityManager em = null;
 
 	public static EntityManager getInstance() {
+		ArrayList<String> leaderboards = new ArrayList<String>();
 		if (em == null) {
 			em = new EntityManager();
 
-			Entity e1 = new Entity(0, "Entidade1", "e1@gmail.com", "entidade1", "123456", "api/entity/0", null);
-			Entity e2 = new Entity(1, "Entidade2", "e2@gmail.com", "entidade2", "123456", "api/entity/1", null);
+			Entity e1 = new Entity(0, "Entidade1", "e1@gmail.com", "entidade1", "123456", "api/entity/0", leaderboards);
+			// Entity e2 = new Entity(1, "Entidade2", "e2@gmail.com", "entidade2", "123456",
+			// "api/entity/1", leaderboards);
 			// leaderboards.add("leade1");
 
 			entities.add(e1);
-			entities.add(e2);
+			//entities.add(e2);
 			// leaderboards.add("leade2");
 
 			// entities.get(0).setLeaderboards(leaderboards);
+
+			// try {
+			// JAXBContext jaxbContext = JAXBContext.newInstance(Entity.class);
+			// Marshaller m = jaxbContext.createMarshaller();
+			// m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			// //m.marshal(entities, System.out);
+			//
+			// } catch (JAXBException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
 
 		}
 		return em;
@@ -57,10 +70,11 @@ public class EntityManager implements IEntity {
 	public void createEntity(String name, String email, String username, String password, String link,
 			ArrayList<String> leaderboards2) {
 		// TODO Auto-generated method stub
-
+		ArrayList<String> leaderboards = new ArrayList<String>();
+		
 		Random rand = new Random();
 		int random = rand.nextInt((100 - 1) + 1) + 1;
-		Entity e = new Entity(random, name, email, username, password, "api/entity/3", null);
+		Entity e = new Entity(random, name, email, username, password, "api/entity/3", leaderboards);
 		entities.add(e);
 	}
 
@@ -73,15 +87,12 @@ public class EntityManager implements IEntity {
 
 	@Override
 	public void removeEntity(int id) {
-		ArrayList<String> leaderboards = new ArrayList<String>();
+		
 		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
 			Entity entity = (Entity) iterator.next();
 			if (entity.getId() == (id)) {
-				// iterator.remove();
-
-				entity.setLeaderboards(leaderboards);
-				leaderboards = entity.getLeaderboards();
-				leaderboards.add("xixas");
+				 iterator.remove();
+			
 			}
 		}
 
