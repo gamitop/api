@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **password** | **String** |  | 
 **link** | **String** |  | 
 **leaderboards** | [**Leaderboard**](Leaderboard.md) |  | 
+**achivements** | [**Achivements**](Achivements.md) |  |  [optional]
 
 
 

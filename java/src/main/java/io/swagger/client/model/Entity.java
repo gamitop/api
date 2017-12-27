@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.Achivements;
 import io.swagger.client.model.Leaderboard;
 import java.io.IOException;
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.UUID;
 /**
  * Entity
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:23:35.301Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-27T00:09:39.681Z")
 public class Entity {
   @SerializedName("id")
   private UUID id = null;
@@ -37,6 +38,9 @@ public class Entity {
 
   @SerializedName("leaderboards")
   private Leaderboard leaderboards = null;
+
+  @SerializedName("achivements")
+  private Achivements achivements = null;
 
   public Entity id(UUID id) {
     this.id = id;
@@ -164,6 +168,24 @@ public class Entity {
     this.leaderboards = leaderboards;
   }
 
+  public Entity achivements(Achivements achivements) {
+    this.achivements = achivements;
+    return this;
+  }
+
+   /**
+   * Get achivements
+   * @return achivements
+  **/
+  @ApiModelProperty(value = "")
+  public Achivements getAchivements() {
+    return achivements;
+  }
+
+  public void setAchivements(Achivements achivements) {
+    this.achivements = achivements;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -180,12 +202,13 @@ public class Entity {
         Objects.equals(this.username, entity.username) &&
         Objects.equals(this.password, entity.password) &&
         Objects.equals(this.link, entity.link) &&
-        Objects.equals(this.leaderboards, entity.leaderboards);
+        Objects.equals(this.leaderboards, entity.leaderboards) &&
+        Objects.equals(this.achivements, entity.achivements);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, email, username, password, link, leaderboards);
+    return Objects.hash(id, name, email, username, password, link, leaderboards, achivements);
   }
 
 
@@ -201,6 +224,7 @@ public class Entity {
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    link: ").append(toIndentedString(link)).append("\n");
     sb.append("    leaderboards: ").append(toIndentedString(leaderboards)).append("\n");
+    sb.append("    achivements: ").append(toIndentedString(achivements)).append("\n");
     sb.append("}");
     return sb.toString();
   }
