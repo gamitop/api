@@ -28,6 +28,7 @@ public class Entity {
 	private String link;
 	
 	private  ArrayList<String> leaderboards = new ArrayList<String>();
+	private  ArrayList<String> achievements = new ArrayList<String>();
 	/**
 	 * @param id
 	 * @param name
@@ -41,7 +42,7 @@ public class Entity {
 	
 	
 	public Entity(int id, String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2) {
+			ArrayList<String> leaderboards2,ArrayList<String> achievements2) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -50,6 +51,7 @@ public class Entity {
 		this.password = password;
 		this.link = link;
 		this.leaderboards = leaderboards2;
+		this.achievements = achievements2;
 	}
 	/**
 	 * 
@@ -98,6 +100,13 @@ public class Entity {
 	}
 	public void setLeaderboards(ArrayList<String> leaderboards) {
 		this.leaderboards = leaderboards;
+	}
+	
+	public ArrayList<String> getAchievements() {
+		return achievements;
+	}
+	public void setAchievements(ArrayList<String> achievements) {
+		this.achievements = achievements;
 	}
 	
 	

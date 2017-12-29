@@ -14,10 +14,14 @@ public class LeaderboardManager implements ILeaderboard {
 	static LeaderboardManager lm = null;
 
 	public static LeaderboardManager getInstance() {
-
+		ArrayList<String> players = new ArrayList<String>();
 		// ArrayList<String> players = new ArrayList<String>();
 		if (lm == null) {
 			lm = new LeaderboardManager();
+			
+			Leaderboard l1 = new Leaderboard(0, "hh", 0, "ada", "afafa", players);
+			leaderboards.add(l1);
+			
 		}
 		return lm;
 	}

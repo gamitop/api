@@ -4,7 +4,7 @@ public class Achievement {
 
 	private int id ;
 	private String name ;
-	private String entity ;
+	private int entity ;
 	private String description ;
 	private String link ;
 	/**
@@ -14,13 +14,19 @@ public class Achievement {
 	 * @param description
 	 * @param link
 	 */
-	public Achievement(int id, String name, String entity, String description, String link) {
+	public Achievement(int id, String name, int entity, String description, String link) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.entity = entity;
 		this.description = description;
 		this.link = link;
+	}
+	/**
+	 * 
+	 */
+	public Achievement() {
+		super();
 	}
 	public int getId() {
 		return id;
@@ -34,10 +40,10 @@ public class Achievement {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getEntity() {
+	public int getEntity() {
 		return entity;
 	}
-	public void setEntity(String entity) {
+	public void setEntity(int entity) {
 		this.entity = entity;
 	}
 	public String getDescription() {
@@ -55,29 +61,4 @@ public class Achievement {
 	
 	
 	
-	
-	/*
- * 
- * 
- * 
- *   "id": "",
-        "name": "",
-        // ID entidade
-        "entidade": "",
-        // ID "players"  
-        "players": [{
-            "player": {
-                "name": "",
-                "achievements": {
-                    "achievement": [
-                        "",
-                        ""
-                    ]
-                },
-                //Este score pode ser adaptamos a diferentes situações( p.e: Tempo de realização)
-                "score": ""
-            }
-        }],
-        "link": ""
- */
 }

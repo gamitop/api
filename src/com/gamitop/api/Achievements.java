@@ -1,61 +1,120 @@
 package com.gamitop.api;
 
+import java.util.List;
+import java.util.Random;
+
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
+
+import com.gamitop.impl.AchievementsManager;
+import com.gamitop.model.Achievement;
 
 @Path("/entity/{id_entity}/achievements")
 public class Achievements {
 
 	//
 	@GET
-	/* @Produces(MediaType.APPLICATION_JSON) */
-	public Response getEntities(@PathParam("id_entity") String id) {
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public List<Achievement> getAchievements(@PathParam("id_entity") int id_entity) {
 
-		String output = "Achievements of Entity" + id;
-		return Response.status(200).entity(output).build();
+		AchievementsManager lm = AchievementsManager.getInstance();
+		// String output = "ListOfEntities";
+		return lm.getAchievements(id_entity);
 	}
 
 	@POST
-	/* @Produces(MediaType.APPLICATION_JSON) */
-	public Response addEntity() {
+	@Consumes("application/x-www-form-urlencoded")
+	public Response addAchievement(@PathParam("id_entity") int id_entity, @FormParam("name") String name,
+			@FormParam("description") String description, @Context UriInfo uriInfo) {
 
-		String output = "AddAchievement";
-		return Response.status(200).entity(output).build();
+		AchievementsManager am = AchievementsManager.getInstance();
+		
+		Random rand = new Random();
+		// int id = rand.nextInt((100 - 1) + 1) + 1;
+		int id = 1;
+		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+		builder.path(Integer.toString(id));
+
+		am.createAchievement(id, name, id_entity, description,  builder.toString());
+		return Response.created(builder.build()).entity("Link:  " + builder).build();
 	}
 
 	// GET a specific entity
 	@Path("/{name}")
 	@GET
-	// @Produces(MediaType.APPLICATION_JSON)
-	public String getGame(@PathParam("id_entity") String idE, @PathParam("name") String idL) {
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public Achievement getAchievement(@PathParam("id_entity") int id_entity, @PathParam("id_achievement") int id_achievement) {
 
-		return "specific Achievements" + idE + "---" + idL ;
+		AchievementsManager am = AchievementsManager.getInstance();
+
+		// String output = "ListOfEntities";
+		return am.getAchievement(id_entity, id_achievement);
 
 	}
 
 	// PUT a specific entity
-	@Path("/{name}")
+	@Path("/{id_achievement}")
 	@PUT
-	// @Produces(MediaType.APPLICATION_JSON)
-	public String updateEntity(@PathParam("id_entity") String idE, @PathParam("name") String idL) {
+	@Consumes("application/x-www-form-urlencoded")
+	public String updateAchievement(@PathParam("id_entity") String id_entity, @PathParam("id_achievement") String id_achievement) {
+		return null;
 
-		return "Achievements Updated" + idE + "---" + idL ;
+
 
 	}
 
 	// DELETE a specific entity
-	@Path("/{name}")
+	@Path("/{id_achievement}")
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
-	public String deleteEntity(@PathParam("id_entity") String idE, @PathParam("name") String idL) {
+	public String deleteAchievement(@PathParam("id_entity") String idE, @PathParam("name") String idL) {
 
 		return "Achievements with id:" + idE + "---" + idL + "deleted";
 
 	}
+	
+	// DELETE a specific entity
+	@Path("/{id_achievement}/players/{id}")
+	@DELETE
+	// @Produces(MediaType.APPLICATION_JSON)
+	public String deleteAchievementPlayer(@PathParam("name") String name, @PathParam("idPlayer") String idPlayer) {
+
+		return "Achievements with id:" + name + "---" + idPlayer + "deleted";
+
+	}
+
+	// DELETE a specific entity
+	@Path("/players/{id_player}")
+	@GET
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public String getAchievemntsPlayer(@PathParam("id_player") String id_player) {
+
+		return "Achievements with id:" + id_player;
+
+	}
+
+	// DELETE a specific entity
+	@Path("/players/{id_player}")
+	@POST
+	@Consumes("application/x-www-form-urlencoded")
+	public String addAchievementPlayer(@PathParam("id_player") String id_player) {
+
+		return "Achievements with id:" + id_player ;
+
+	}
+	
+
 
 }

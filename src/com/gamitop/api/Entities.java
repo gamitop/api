@@ -40,7 +40,7 @@ public class Entities {
 			@FormParam("password") String password, @FormParam("name") String name, @Context UriInfo uriInfo) {
 
 		EntityManager em = EntityManager.getInstance();
-		em.createEntity(name, email, username, password, null, null);
+		em.createEntity(name, email, username, password, null, null,null);
 
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		builder.path(name);

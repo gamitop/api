@@ -13,10 +13,10 @@ public interface IEntity {
 	public List<Entity> getEntities();
 	/* CreateEntity*/
 	public void createEntity( String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2);
+			ArrayList<String> leaderboards2, ArrayList<String> achievements2);
 	/* UpdateEntity*/
 	public void updateEntity(int id, String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2);
+			ArrayList<String> leaderboards2, ArrayList<String> achievements2);
 	/* RemoveEntity */
 	public void removeEntity(int id);
 

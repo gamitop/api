@@ -22,10 +22,12 @@ public class EntityManager implements IEntity {
 
 	public static EntityManager getInstance() {
 		ArrayList<String> leaderboards = new ArrayList<String>();
+		ArrayList<String> achievements = new ArrayList<String>();
+		
 		if (em == null) {
 			em = new EntityManager();
 
-			Entity e1 = new Entity(0, "Entidade1", "e1@gmail.com", "entidade1", "123456", "api/entity/0", leaderboards);
+			Entity e1 = new Entity(0, "Entidade1", "e1@gmail.com", "entidade1", "123456", "api/entity/0", leaderboards,achievements);
 			// Entity e2 = new Entity(1, "Entidade2", "e2@gmail.com", "entidade2", "123456",
 			// "api/entity/1", leaderboards);
 			// leaderboards.add("leade1");
@@ -46,6 +48,9 @@ public class EntityManager implements IEntity {
 			// // TODO Auto-generated catch block
 			// e.printStackTrace();
 			// }
+			PlayersManager pm = PlayersManager.getInstance();
+			LeaderboardManager lm = LeaderboardManager.getInstance();
+			AchievementsManager am = AchievementsManager.getInstance();
 
 		}
 		return em;
@@ -68,19 +73,20 @@ public class EntityManager implements IEntity {
 
 	@Override
 	public void createEntity(String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2) {
+			ArrayList<String> leaderboards2, ArrayList<String> achievements2) {
 		// TODO Auto-generated method stub
 		ArrayList<String> leaderboards = new ArrayList<String>();
+		ArrayList<String> achievements = new ArrayList<String>();
 		
 		Random rand = new Random();
 		int random = rand.nextInt((100 - 1) + 1) + 1;
-		Entity e = new Entity(random, name, email, username, password, "api/entity/3", leaderboards);
+		Entity e = new Entity(random, name, email, username, password, "api/entity/3", leaderboards,achievements);
 		entities.add(e);
 	}
 
 	@Override
 	public void updateEntity(int id, String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2) {
+			ArrayList<String> leaderboards2, ArrayList<String> achievements2 ) {
 		// TODO Auto-generated method stub
 
 	}
