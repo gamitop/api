@@ -91,7 +91,6 @@ public class PlayersManager implements IPlayer {
 				iterator.remove();
 			}
 		}
-		
 
 		for (Iterator<Leaderboard> iterator2 = LeaderboardManager.leaderboards.iterator(); iterator2.hasNext();) {
 			Leaderboard leaderboard = (Leaderboard) iterator2.next();
@@ -114,8 +113,25 @@ public class PlayersManager implements IPlayer {
 	}
 
 	@Override
-	public void addPlayerAchievement(int idEntity, int id_achievement, int id_Player) {
-		// TODO Auto-generated method stub
+	public void addPlayerAchievement(int id_Entity, int id_achievement, int id_Player) {
+
+		for (Iterator<Achievement> iterator = AchievementsManager.achievements.iterator(); iterator.hasNext();) {
+			Achievement achievement = (Achievement) iterator.next();
+			if (achievement.getId() == id_achievement && achievement.getEntity() == id_Entity) {
+
+				for (Iterator<Player> iterator2 = players.iterator(); iterator2.hasNext();) {
+					Player player = (Player) iterator2.next();
+					if (player.getId() == id_Player && player.getEntity() == id_Entity) {
+						player.getAchievements().add(Integer.toString(id_achievement));
+					} else {
+
+						return;
+					}
+				}
+			} else {
+				return;
+			}
+		}
 
 	}
 
@@ -126,9 +142,36 @@ public class PlayersManager implements IPlayer {
 	}
 
 	@Override
-	public List<Achievement> getPlayerAchievements(int id_Entity, int id_achievement, int id_Player) {
+	public List<Achievement> getPlayerAchievements(int id_Entity, int id_Player) {
 		// TODO Auto-generated method stub
-		return null;
+
+		List<Achievement> listAchievements = new ArrayList<Achievement>();
+
+		for (Iterator<Player> iterator = players.iterator(); iterator.hasNext();) {
+			Player player = (Player) iterator.next();
+
+			if (player.getEntity() == id_Entity && player.getId() == id_Player) {
+				for (Iterator<String> iterator2 = player.getAchievements().iterator(); iterator2.hasNext();) {
+					String id_Achievement = (String) iterator2.next();
+
+					for (Iterator<Achievement> iterator3 = AchievementsManager.achievements.iterator(); iterator3
+							.hasNext();) {
+						Achievement achievement = (Achievement) iterator3.next();
+
+						if (achievement.getId() == Integer.parseInt(id_Achievement)) {
+							listAchievements.add(achievement);
+						}
+
+					}
+
+				}
+			} else {
+				return null;
+			}
+
+		}
+		return listAchievements;
+
 	}
 
 }

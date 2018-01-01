@@ -19,6 +19,7 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import com.gamitop.impl.AchievementsManager;
+import com.gamitop.impl.PlayersManager;
 import com.gamitop.model.Achievement;
 
 @Path("/entity/{id_entity}/achievements")
@@ -40,14 +41,14 @@ public class Achievements {
 			@FormParam("description") String description, @Context UriInfo uriInfo) {
 
 		AchievementsManager am = AchievementsManager.getInstance();
-		
+
 		Random rand = new Random();
 		// int id = rand.nextInt((100 - 1) + 1) + 1;
 		int id = 1;
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		builder.path(Integer.toString(id));
 
-		am.createAchievement(id, name, id_entity, description,  builder.toString());
+		am.createAchievement(id, name, id_entity, description, builder.toString());
 		return Response.created(builder.build()).entity("Link:  " + builder).build();
 	}
 
@@ -55,7 +56,8 @@ public class Achievements {
 	@Path("/{name}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Achievement getAchievement(@PathParam("id_entity") int id_entity, @PathParam("id_achievement") int id_achievement) {
+	public Achievement getAchievement(@PathParam("id_entity") int id_entity,
+			@PathParam("id_achievement") int id_achievement) {
 
 		AchievementsManager am = AchievementsManager.getInstance();
 
@@ -68,10 +70,9 @@ public class Achievements {
 	@Path("/{id_achievement}")
 	@PUT
 	@Consumes("application/x-www-form-urlencoded")
-	public String updateAchievement(@PathParam("id_entity") String id_entity, @PathParam("id_achievement") String id_achievement) {
+	public String updateAchievement(@PathParam("id_entity") String id_entity,
+			@PathParam("id_achievement") String id_achievement) {
 		return null;
-
-
 
 	}
 
@@ -79,13 +80,17 @@ public class Achievements {
 	@Path("/{id_achievement}")
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
-	public String deleteAchievement(@PathParam("id_entity") String idE, @PathParam("name") String idL) {
+	public Response deleteAchievement(@PathParam("id_entity") int id_Entity, @PathParam("name") int id_Achievement) {
 
-		return "Achievements with id:" + idE + "---" + idL + "deleted";
+		AchievementsManager am = AchievementsManager.getInstance();
+
+		am.removeAchievement(id_Entity, id_Achievement);
+
+		return Response.ok().entity("Achievement removed!").build();
 
 	}
-	
-	// DELETE a specific entity
+
+	// Add achievement player
 	@Path("/{id_achievement}/players/{id}")
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
@@ -95,26 +100,31 @@ public class Achievements {
 
 	}
 
-	// DELETE a specific entity
+	// Get achievement player
 	@Path("/players/{id_player}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public String getAchievemntsPlayer(@PathParam("id_player") String id_player) {
+	public List<Achievement> getAchievementsPlayer(@PathParam("id_player") int id_player,
+			@PathParam("id_entity") int id_Entity) {
 
-		return "Achievements with id:" + id_player;
-
+		PlayersManager pm = PlayersManager.getInstance();
+		// String output = "ListOfEntities";
+		return pm.getPlayerAchievements(id_Entity, id_player);
 	}
 
-	// DELETE a specific entity
+	// Add achievement player
 	@Path("/players/{id_player}")
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
-	public String addAchievementPlayer(@PathParam("id_player") String id_player) {
-
-		return "Achievements with id:" + id_player ;
+	public String addAchievementPlayer(@PathParam("id_player") int id_player,
+			@PathParam("id_entity") int id_Entity, @FormParam("id_achievement") int id_achievement) {
+		
+		PlayersManager pm= PlayersManager.getInstance();
+		pm.addPlayerAchievement(id_Entity, id_achievement, id_player);
+		
+		return "Achievemente added to Player";
+		
 
 	}
-	
-
 
 }
