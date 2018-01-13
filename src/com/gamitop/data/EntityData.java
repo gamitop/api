@@ -12,12 +12,14 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import com.gamitop.model.Entity;
+import com.gamitop.model.Leaderboard;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -75,10 +77,25 @@ public class EntityData {
 		return entities;
 	}
 
-	public void removeData(int id) {		
-			colEntity.deleteOne(eq("_id", id));
+	public void removeData(int id) {
+		colEntity.deleteOne(eq("_id", id));
 
-	
+	}
+
+	public int getIEntity() {
+
+		final List<Integer> entities = new ArrayList<Integer>();
+		Block<Entity> printBlock = new Block<Entity>() {
+			public void apply(final Entity lead) {
+				// System.out.println(lead.getId());
+				entities.add(lead.getId());
+			}
+		};
+		colEntity.find().forEach(printBlock);
+		;
+		// System.out.println(Collections.max(entities));
+
+		return Collections.max(entities);
 	}
 
 }

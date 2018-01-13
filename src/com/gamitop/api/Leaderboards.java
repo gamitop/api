@@ -26,6 +26,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import com.gamitop.data.PlayerData;
 import com.gamitop.impl.LeaderboardManager;
 import com.gamitop.impl.PlayersManager;
 import com.gamitop.model.Leaderboard;
@@ -53,11 +54,11 @@ public class Leaderboards {
 
 		LeaderboardManager lm = LeaderboardManager.getInstance();
 		ArrayList<String> players = new ArrayList<String>();
-		
+
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
 		builder.path(Integer.toString(0));
 
-		lm.createLeaderboard( name, entity, description, builder.toString(), players);
+		lm.createLeaderboard(name, entity, description, builder.toString(), players);
 		return Response.created(builder.build()).entity("Link:  " + builder).build();
 	}
 
@@ -95,18 +96,17 @@ public class Leaderboards {
 
 		LeaderboardManager lm = LeaderboardManager.getInstance();//
 		lm.removeLeaderboard(idEntity, idLeaderboard);
-		
-		
 
 		return Response.ok().entity("Leaderboard removed!").build();
 
 	}
-	
-	//get players of leaderboard
+
+	// get players of leaderboard
 	@Path("/{id_leaderboard}/players")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List<Player> getEntities(@PathParam("id_Entity") int id_Entity,@PathParam("id_Leaderboard") int id_Leaderboard) {
+	public List<Player> getPlayers(@PathParam("id_entity") int id_Entity,
+			@PathParam("id_leaderboard") int id_Leaderboard) {
 
 		PlayersManager lm = PlayersManager.getInstance();
 
@@ -118,34 +118,31 @@ public class Leaderboards {
 	@Path("/{id_leaderboard}/players")
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
-	public Response addPlayers(@PathParam("id_entity") int entity,@PathParam("id_leaderboard") int id_leaderboard, @FormParam("name") String name,
-			@FormParam("score") int score, @FormParam("win") int win,@FormParam("lose") int lose, @FormParam("totalGames") int totalGames, @Context UriInfo uriInfo) {
+	public Response addPlayers(@PathParam("id_entity") int entity, @PathParam("id_leaderboard") int id_leaderboard,
+			@FormParam("name") String name, @FormParam("score") int score, @FormParam("win") int win,
+			@FormParam("lose") int lose, @FormParam("totalGames") int totalGames, @Context UriInfo uriInfo) {
 
-		
 		PlayersManager pm = PlayersManager.getInstance();
 		ArrayList<String> achievements = new ArrayList<String>();
-		Random rand = new Random();
-		// int id = rand.nextInt((100 - 1) + 1) + 1;
-		int id = 0;
-		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(id));
 
-		pm.addPlayer(id, name, score, win, lose, totalGames, entity, id_leaderboard, builder.toString(), achievements);
+		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+		// builder.path(Integer.toString(id));
+
+		pm.addPlayer(name, score, win, lose, totalGames, entity, id_leaderboard, builder.toString(), achievements);
 		return Response.created(builder.build()).entity("Link:  " + builder).build();
-	
+
 	}
 
 	// GET a specific entity
 	@Path("/{id_leaderboard}/players/{id_player}")
 	@GET
 	// @Produces(MediaType.APPLICATION_JSON)
-	public Player getGame(@PathParam("id_entity") int id_Entity, @PathParam("id_leaderboard") int id_Leaderboard,
+	public List<Player> getGame(@PathParam("id_entity") int id_Entity, @PathParam("id_leaderboard") int id_Leaderboard,
 			@PathParam("id_player") int id_Player) {
 
-		PlayersManager lm = PlayersManager.getInstance();
+		PlayerData p = PlayerData.getInstance();
 
-		// String output = "ListOfEntities";
-		return lm.getPlayer(id_Entity, id_Leaderboard, id_Player);
+		return p.getDataPlayer(id_Entity, id_Player, id_Leaderboard);
 
 	}
 
@@ -167,10 +164,8 @@ public class Leaderboards {
 	public Response deletePlayer(@PathParam("id_entity") int id_Entity, @PathParam("id_leaderboard") int id_Leaderboard,
 			@PathParam("id_player") int id_Player) {
 
-		PlayersManager lm = PlayersManager.getInstance();
-
-		lm.removePlayer(id_Entity, id_Leaderboard, id_Player);
-
+		PlayerData p = PlayerData.getInstance();
+		p.removePlayer(id_Entity, id_Leaderboard, id_Player);
 		return Response.ok().entity("Player removed!").build();
 
 	}

@@ -40,14 +40,14 @@ public class LeaderboardManager implements ILeaderboard {
 	public List<Leaderboard> getLeaderboards(int idEntity) {
 		LeaderboardData l= LeaderboardData.getInstance();
 		//e.getData();
-		return l.getLeaderboards();
+		return l.getLeaderboards(idEntity);
 	}
 
 	@Override
 	public void createLeaderboard( String name, int idEntity, String description, String link,
 			ArrayList<String> players) {
 		
-		int size= LeaderboardData.getInstance().getId()+1;
+		int size= LeaderboardData.getInstance().getIdLeaderboard()+1;
 		System.out.println(size);
 		Leaderboard l1 = new Leaderboard(size, name, idEntity, description, link, players);
 		//leaderboards.add(l1);

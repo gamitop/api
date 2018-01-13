@@ -52,36 +52,36 @@ public class LeaderboardData {
 		}
 	}
 
-	public List<Leaderboard> getLeaderboards() {
-		final List<Leaderboard> entities = new ArrayList<Leaderboard>();
+	public List<Leaderboard> getLeaderboards(int idEntity) {
+		final List<Leaderboard> leaderboards = new ArrayList<Leaderboard>();
 
 		Block<Leaderboard> printBlock = new Block<Leaderboard>() {
 			public void apply(final Leaderboard leaderboard) {
-				entities.add(leaderboard);
+				leaderboards.add(leaderboard);
 			}
 		};
 
-		colLeaderboard.find().forEach(printBlock);
-		return entities;
+		colLeaderboard.find(eq("entity", idEntity)).forEach(printBlock);
+		return leaderboards;
 	}
 
 	public List<Leaderboard> getDataLeaderboard(int idEntity, int idLeaderboard) {
-		final List<Leaderboard> entities = new ArrayList<Leaderboard>();
+		final List<Leaderboard> leaderboards = new ArrayList<Leaderboard>();
 
 		Block<Leaderboard> printBlock = new Block<Leaderboard>() {
 			public void apply(final Leaderboard leaderboard) {
-				entities.add(leaderboard);
+				leaderboards.add(leaderboard);
 			}
 		};
 
 		colLeaderboard.find(and(eq("entity", idEntity), eq("_id", idLeaderboard))).forEach(printBlock);
 
-		return entities;
+		return leaderboards;
 	}
 
 
 
-	public int getId() {
+	public int getIdLeaderboard() {
 		
 		final List<Integer> entities = new ArrayList<Integer>();
 		Block<Leaderboard> printBlock = new Block<Leaderboard>() {

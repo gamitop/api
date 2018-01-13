@@ -13,10 +13,10 @@ public interface IPlayer {
 	/* GetListEntity*/	
 	public List<Player> getPlayersLeaderboard(int idEntity,int id_Leaderboard );
 	/* CreateEntity*/
-	public void addPlayer( int id, String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
+	public void addPlayer( String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
 			String link, ArrayList<String> achievements);
 	/* UpdateEntity*/
-	public void updatePlayer(int id, String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
+	public void updatePlayer( String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
 			String link, ArrayList<String> achievements);
 	/* RemoveEntity */
 	public void removePlayer(int id_Entity,int id_Leaderboard,int id_Player);
