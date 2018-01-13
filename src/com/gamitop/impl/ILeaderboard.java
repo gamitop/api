@@ -7,11 +7,11 @@ import com.gamitop.model.Leaderboard;
 
 public interface ILeaderboard {
 	/* Get Entity */
-	public Leaderboard getLeaderboard(int idEntity,int idLeaderboard);
+	public List<Leaderboard> getLeaderboard(int idEntity,int idLeaderboard);
 	/* GetListEntity*/	
 	public List<Leaderboard> getLeaderboards(int idEntity);
 	/* CreateEntity*/
-	public void createLeaderboard( int id, String name, int entity, String description, String link, ArrayList<String> players);
+	public void createLeaderboard( String name, int entity, String description, String link, ArrayList<String> players);
 	/* UpdateEntity*/
 	public void updateLeaderboard(int id, String name, int entity, String description, String link, ArrayList<String> players);
 	/* RemoveEntity */

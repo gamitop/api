@@ -53,13 +53,11 @@ public class Leaderboards {
 
 		LeaderboardManager lm = LeaderboardManager.getInstance();
 		ArrayList<String> players = new ArrayList<String>();
-		Random rand = new Random();
-		// int id = rand.nextInt((100 - 1) + 1) + 1;
-		int id = 0;
+		
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(id));
+		builder.path(Integer.toString(0));
 
-		lm.createLeaderboard(id, name, entity, description, builder.toString(), players);
+		lm.createLeaderboard( name, entity, description, builder.toString(), players);
 		return Response.created(builder.build()).entity("Link:  " + builder).build();
 	}
 
@@ -67,7 +65,7 @@ public class Leaderboards {
 	@Path("/{id_leaderboard}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Leaderboard getLeaderboard(@PathParam("id_entity") int idEntity,
+	public List<Leaderboard> getLeaderboard(@PathParam("id_entity") int idEntity,
 			@PathParam("id_leaderboard") int idLeaderboard) {
 
 		LeaderboardManager lm = LeaderboardManager.getInstance();
@@ -95,9 +93,10 @@ public class Leaderboards {
 	public Response deleteLeaderboard(@PathParam("id_entity") int idEntity,
 			@PathParam("id_leaderboard") int idLeaderboard) {
 
-		LeaderboardManager lm = LeaderboardManager.getInstance();
-
+		LeaderboardManager lm = LeaderboardManager.getInstance();//
 		lm.removeLeaderboard(idEntity, idLeaderboard);
+		
+		
 
 		return Response.ok().entity("Leaderboard removed!").build();
 

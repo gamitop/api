@@ -2,6 +2,8 @@ package com.gamitop.model;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement(name = "player")
 public class Player {
 	
 	

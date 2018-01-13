@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import com.gamitop.data.EntityData;
 import com.gamitop.model.Entity;
 
 public class EntityManager implements IEntity {
@@ -48,27 +49,26 @@ public class EntityManager implements IEntity {
 			// // TODO Auto-generated catch block
 			// e.printStackTrace();
 			// }
-			PlayersManager pm = PlayersManager.getInstance();
-			LeaderboardManager lm = LeaderboardManager.getInstance();
-			AchievementsManager am = AchievementsManager.getInstance();
+			// PlayersManager pm = PlayersManager.getInstance();
+			// LeaderboardManager lm = LeaderboardManager.getInstance();
+			// AchievementsManager am = AchievementsManager.getInstance();
 
 		}
 		return em;
 	}
 
 	public List<Entity> getEntities() {
-		return entities;
+		EntityData e= EntityData.getInstance();
+		//e.getData();
+		return e.getData();
 	}
 
 	@Override
-	public Entity getEntity(int id) {
-		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
-			Entity entity = (Entity) iterator.next();
-			if (entity.getId() == (id))
-				return entity;
+	public List<Entity> getEntity(int id) {
 
-		}
-		return null;
+		EntityData e= EntityData.getInstance();
+		
+		return e.getDataEntity(id);
 	}
 
 	@Override
@@ -77,11 +77,17 @@ public class EntityManager implements IEntity {
 		// TODO Auto-generated method stub
 		ArrayList<String> leaderboards = new ArrayList<String>();
 		ArrayList<String> achievements = new ArrayList<String>();
-		
+				
 		Random rand = new Random();
 		int random = rand.nextInt((100 - 1) + 1) + 1;
-		Entity e = new Entity(random, name, email, username, password, "api/entity/3", leaderboards,achievements);
-		entities.add(e);
+		Entity entity = new Entity(random, name, email, username, password, "api/entity/3", leaderboards,achievements);
+		//entities.add(entity);
+		
+		//MONGOdB
+		EntityData e= EntityData.getInstance();
+		e.insertEntity(entity);
+		
+		
 	}
 
 	@Override
@@ -94,13 +100,16 @@ public class EntityManager implements IEntity {
 	@Override
 	public void removeEntity(int id) {
 		
-		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
-			Entity entity = (Entity) iterator.next();
-			if (entity.getId() == (id)) {
-				 iterator.remove();
-			
-			}
-		}
+//		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
+//			Entity entity = (Entity) iterator.next();
+//			if (entity.getId() == (id)) {
+//				 iterator.remove();
+//			
+//			}
+//		}
+		
+		EntityData e= EntityData.getInstance();
+		e.removeData(id);
 
 	}
 

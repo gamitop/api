@@ -51,7 +51,7 @@ public class Entities {
 	@Path("/{id_entity}")
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Entity getEntity(@PathParam("id_entity") int id) {
+	public List<Entity> getEntity(@PathParam("id_entity") int id) {
 		EntityManager em = EntityManager.getInstance();
 
 		return em.getEntity(id);

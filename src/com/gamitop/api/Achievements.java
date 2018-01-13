@@ -35,7 +35,7 @@ public class Achievements {
 		return lm.getAchievements(id_entity);
 	}
 
-	@POST
+	@POST	
 	@Consumes("application/x-www-form-urlencoded")
 	public Response addAchievement(@PathParam("id_entity") int id_entity, @FormParam("name") String name,
 			@FormParam("description") String description, @Context UriInfo uriInfo) {

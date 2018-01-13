@@ -1,5 +1,8 @@
 package com.gamitop.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "achievement")
 public class Achievement {
 
 	private int id ;

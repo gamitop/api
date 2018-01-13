@@ -8,7 +8,7 @@ import com.gamitop.model.Entity;
 public interface IEntity {
 	
 	/* Get Entity */
-	public Entity getEntity(int id);
+	public List<Entity> getEntity(int id);
 	/* GetListEntity*/	
 	public List<Entity> getEntities();
 	/* CreateEntity*/
