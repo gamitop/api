@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gamitop.data.AchievementsData;
 import com.gamitop.data.LeaderboardData;
 import com.gamitop.data.PlayerData;
 import com.gamitop.model.Achievement;
@@ -31,29 +32,30 @@ public class PlayersManager implements IPlayer {
 	}
 
 	@Override
-	public void addPlayer( String name, int score, int win, int lose, int totalGames, int entity,
-			int id_leaderboard, String link, ArrayList<String> achievements) {
+	public void addPlayer(String name, int score, int win, int lose, int totalGames, int entity, int id_leaderboard,
+			String link, ArrayList<String> achievements) {
 
-		int id= PlayerData.getInstance().getIdPlayer()+1;
+		int id = PlayerData.getInstance().getIdPlayer() + 1;
 		Player p1 = new Player(id, name, score, win, lose, totalGames, entity, id_leaderboard, link, achievements);
 
-//		players.add(p1);
-//
-//		for (Iterator<Leaderboard> iterator2 = LeaderboardManager.leaderboards.iterator(); iterator2.hasNext();) {
-//			Leaderboard leaderboard = (Leaderboard) iterator2.next();
-//			if (leaderboard.getId() == id_leaderboard) {
-//				leaderboard.getPlayers().add(Integer.toString(id));
-//			}
-//		}
-		
-		PlayerData p= PlayerData.getInstance();
+		// players.add(p1);
+		//
+		// for (Iterator<Leaderboard> iterator2 =
+		// LeaderboardManager.leaderboards.iterator(); iterator2.hasNext();) {
+		// Leaderboard leaderboard = (Leaderboard) iterator2.next();
+		// if (leaderboard.getId() == id_leaderboard) {
+		// leaderboard.getPlayers().add(Integer.toString(id));
+		// }
+		// }
+
+		PlayerData p = PlayerData.getInstance();
 		p.insertPlayer(p1, id_leaderboard);
 
 	}
 
 	@Override
-	public void updatePlayer( String name, int score, int win, int lose, int totalGames, int entity,
-			int leaderboard, String link, ArrayList<String> achievements) {
+	public void updatePlayer(String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
+			String link, ArrayList<String> achievements) {
 		// TODO Auto-generated method stub
 
 	}
@@ -74,8 +76,8 @@ public class PlayersManager implements IPlayer {
 
 	@Override
 	public List<Player> getPlayersLeaderboard(int id_Entity, int id_Leaderboard) {
-		PlayerData p= PlayerData.getInstance();
-		//e.getData();
+		PlayerData p = PlayerData.getInstance();
+		// e.getData();
 		return p.getPlayers(id_Entity, id_Leaderboard);
 	}
 
@@ -111,32 +113,17 @@ public class PlayersManager implements IPlayer {
 	}
 
 	@Override
-	public void addPlayerAchievement(int id_Entity, int id_achievement, int id_Player) {
+	public void addPlayerAchievement(int id_entity, int id_achievement, int id_player) {
 
-		for (Iterator<Achievement> iterator = AchievementsManager.achievements.iterator(); iterator.hasNext();) {
-			Achievement achievement = (Achievement) iterator.next();
-			if (achievement.getId() == id_achievement && achievement.getEntity() == id_Entity) {
-
-				for (Iterator<Player> iterator2 = players.iterator(); iterator2.hasNext();) {
-					Player player = (Player) iterator2.next();
-					if (player.getId() == id_Player && player.getEntity() == id_Entity) {
-						player.getAchievements().add(Integer.toString(id_achievement));
-					} else {
-
-						return;
-					}
-				}
-			} else {
-				return;
-			}
-		}
+	PlayerData p = PlayerData.getInstance();
+	p.insertPlayerAchievement(id_entity, id_achievement, id_player);
 
 	}
 
 	@Override
-	public void removePlayerAchievement(int idEntity, int id_achievement, int id_Player) {
-		// TODO Auto-generated method stub
-
+	public void removePlayerAchievement(int id_entity, int id_achievement, int id_player) {
+		PlayerData p = PlayerData.getInstance();
+		p.removePlayerAchievement(id_entity, id_achievement, id_player);
 	}
 
 	@Override

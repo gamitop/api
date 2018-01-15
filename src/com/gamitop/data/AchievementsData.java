@@ -13,6 +13,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import com.gamitop.model.Entity;
+import com.gamitop.model.Player;
 import com.gamitop.model.Achievement;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -81,23 +82,30 @@ public class AchievementsData {
 
 	public int getIdAchievement() {
 
-		final List<Integer> entities = new ArrayList<Integer>();
+		int id;
+		final List<Integer> achievements = new ArrayList<Integer>();
 		Block<Achievement> printBlock = new Block<Achievement>() {
-			public void apply(final Achievement lead) {
+			public void apply(final Achievement ach) {
 				// System.out.println(lead.getId());
-				entities.add(lead.getId());
+				achievements.add(ach.getId());
 			}
 		};
 		colAchievement.find().forEach(printBlock);
-		;
+		
 		// System.out.println(Collections.max(entities));
+		if (achievements.isEmpty()) {
+			id = -1;
+		} else {
+			id = Collections.max(achievements);
+		}
 
-		return Collections.max(entities);
+		return id;
 	}
 
-	public void removeLeaderboar(int id_entity, int id_Achievement) {
+	public void removeAchievement(int id_entity, int id_Achievement) {
 		colAchievement.deleteOne(and(eq("entity", id_entity), eq("_id", id_Achievement)));
-		colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("achievements", Integer.toString(id_Achievement))));
+		colEntity.updateOne(eq("_id", id_entity),
+				Updates.pullByFilter(Filters.eq("achievements", Integer.toString(id_Achievement))));
 
 	}
 

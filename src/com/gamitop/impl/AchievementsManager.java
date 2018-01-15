@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gamitop.data.AchievementsData;
 import com.gamitop.model.Achievement;
 import com.gamitop.model.Entity;
 import com.gamitop.model.Leaderboard;
@@ -28,74 +29,37 @@ public class AchievementsManager implements IAchievement {
 	}
 
 	@Override
-	public Achievement getAchievement(int id_Entity, int id_Achievement) {
+	public List<Achievement> getAchievement(int id_Entity, int id_Achievement) {
+		AchievementsData a = AchievementsData.getInstance();
 
-		for (Iterator<Achievement> iterator = achievements.iterator(); iterator.hasNext();) {
-			Achievement achievement = (Achievement) iterator.next();
-
-			if (achievement.getEntity() == id_Entity && id_Achievement == achievement.getId()) {
-				return achievement;
-			}
-		}
-
-		return null;
+		return a.getDataAchievement(id_Entity, id_Achievement);
 	}
 
 	@Override
 	public List<Achievement> getAchievements(int id_Entity) {
-		List<Achievement> listAchievements = new ArrayList<Achievement>();
+		AchievementsData a = AchievementsData.getInstance();
 
-		for (Iterator<Achievement> iterator = achievements.iterator(); iterator.hasNext();) {
-			Achievement achievement = (Achievement) iterator.next();
-
-			if (achievement.getEntity() == id_Entity) {
-				listAchievements.add(achievement);
-			}
-		}
-		return listAchievements;
+		return a.getAchievements(id_Entity);
 	}
 
 	@Override
-	public void createAchievement(int id, String name, int id_Entity, String description, String link) {
-
+	public void createAchievement(String name, int id_Entity, String description, String link) {
+		AchievementsData a = AchievementsData.getInstance();
+		int id = a.getIdAchievement()+1;
 		Achievement a1 = new Achievement(id, name, id_Entity, description, link);
-		achievements.add(a1);
-
-		for (Iterator<Entity> iterator2 = EntityManager.entities.iterator(); iterator2.hasNext();) {
-			Entity entity = (Entity) iterator2.next();
-			if (entity.getId() == id_Entity) {
-				entity.getAchievements().add(Integer.toString(id));
-			}
-		}
-
+		a.insertAchievement(a1, id_Entity);	
 	}
 
 	@Override
-	public void updateAchievement(int id, String name, int entity, String description, String link) {
+	public void updateAchievement(String name, int entity, String description, String link) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void removeAchievement(int id_Entity, int id_Achievement) {
-		for (Iterator<Achievement> iterator = achievements.iterator(); iterator.hasNext();) {
-			Achievement achievement = (Achievement) iterator.next();
-			if (achievement.getEntity() == id_Entity && id_Achievement == achievement.getId()) {
-				iterator.remove();
-			}
-		}
-
-		for (Iterator<Entity> iterator2 = EntityManager.entities.iterator(); iterator2.hasNext();) {
-			Entity entity = (Entity) iterator2.next();
-			if (entity.getId() == id_Entity) {
-				for (Iterator<String> leader = entity.getAchievements().iterator(); leader.hasNext();) {
-					String le = (String) leader.next();
-					if (Integer.parseInt(le) == id_Achievement) {
-						leader.remove();
-					}
-				}
-			}
-		}
+	public void removeAchievement(int id_Entity, int id_Achievement) {	
+		AchievementsData a = AchievementsData.getInstance();
+		a.removeAchievement(id_Entity, id_Achievement);		
 
 	}
 

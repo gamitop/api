@@ -42,13 +42,11 @@ public class Achievements {
 
 		AchievementsManager am = AchievementsManager.getInstance();
 
-		Random rand = new Random();
-		// int id = rand.nextInt((100 - 1) + 1) + 1;
-		int id = 1;
+	
 		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(id));
+		builder.path(Integer.toString(0));
 
-		am.createAchievement(id, name, id_entity, description, builder.toString());
+		am.createAchievement(name, id_entity, description, builder.toString());
 		return Response.created(builder.build()).entity("Link:  " + builder).build();
 	}
 
@@ -56,7 +54,7 @@ public class Achievements {
 	@Path("/{name}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Achievement getAchievement(@PathParam("id_entity") int id_entity,
+	public List<Achievement> getAchievement(@PathParam("id_entity") int id_entity,
 			@PathParam("id_achievement") int id_achievement) {
 
 		AchievementsManager am = AchievementsManager.getInstance();
@@ -90,14 +88,15 @@ public class Achievements {
 
 	}
 
-	// Add achievement player
-	@Path("/{id_achievement}/players/{id}")
+	// Delete achievement player
+	@Path("/{id_achievement}/players/{id_player}")
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
-	public String deleteAchievementPlayer(@PathParam("name") String name, @PathParam("idPlayer") String idPlayer) {
+	public String deleteAchievementPlayer(@PathParam("id_entity") int id_entity, @PathParam("id_achievement") int id_achievement, @PathParam("id_player") int id_player) {
 
-		return "Achievements with id:" + name + "---" + idPlayer + "deleted";
-
+		PlayersManager pm= PlayersManager.getInstance();
+		pm.removePlayerAchievement(id_entity, id_achievement, id_player);
+		return null;
 	}
 
 	// Get achievement player
