@@ -1,36 +1,120 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Photon by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>GAMITOP</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
 
-$(document).ready(function(){
-	
-	// Inserir jogo
-	$("#btnSubmit").click(function(){
-		$.ajax({
-			  method: "POST",
-			  url: "http://localhost:8080/gamitop/api/auth",
-			  data: { 
-				  login: $("#txtLogin").val(), 
-				  pass: $("#txtPass").val(), 
-			  }
-			})
-		  .done(function( msg ) {
-		      console.log("Token: " + msg)
-		      localStorage.setItem("token", msg);
-		      window.location.href = "app.html";
-		  });
-	});
-});
-</script>
+<head>
+	<title>Gamitop</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="assets/js/jquery.min.js"></script>
+
 </head>
+
 <body>
-	<h1>Gamitop Auth!</h1>
-	Login: <input id="txtLogin" type="text"/><br/>
-	Pass: <input id="txtPass" type="text"/><br/>
-	<input id="btnSubmit" type="button" value="SUBMIT"/><br/>
+	<!-- Header -->
+	<section id="header">
+		<div class="inner">
+			<span> <img src="images/logo.png" alt="logo" width="50%" ></span>
+			<h1>Hi, welcome to our <strong>API</strong><br />
+			</h1>
+			<p>This API allows you to create and manage leaderboards and achievements to integrate in your web apllication. <br> Whe
+				provide the information in most comun formates JSON and XML. ENJOY!
+			</p>
+			<ul class="actions">
+				<li><a href="#one" class="button scrolly">Discover</a></li>
+				<li><a id="formLogin" class="button">Login</a></li>
+			</ul>
+		</div>
+	</section>
+	<!-- One -->
+	<section id="one" class="main style1">
+		<div class="container">
+			<div class="row 150%">
+				<div class="6u 12u$(medium)">
+					<header class="major">
+						<h2>Documentation</h2>
+					</header>
+					<p>
+						To create leaderboars and achievements you need to create an account. Registed users and not registed can:
+						<br>
+						<li> See leaderboards</li>
+						<li>See Achievements</li>
+						<br> Only registed users can:
+						<br>
+						<li>Create Leaderboards</li>
+						<li>Alter Leaderboards</li>
+						<li>Delete Leaderboards</li>
+						<li>Create Achievements</li>
+						<li>Alter Achievements</li>
+						<li>Delete Achievements</li>
+					</p>
+				</div>
+				<div class="6u$ 12u$(medium) important(medium)">
+					<ul class="major-icons">
+						<li><span class="icon style1 major fa-book"></span></li>
+						<li><span class="icon style2 major fa-code-fork"></span></li>
+						<li><a class="button special small">Documentation</a></li>
+						<li><a class="button special small">GitHub</a></li>
+
+					</ul>
+					<p>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Two -->
+	<section id="two" class="main style2">
+		<div class="container">
+			<div class="row 150%">
+				<div class="6u 12u$(medium)">
+					<ul class="major-icons">
+						<li><span class="icon style1 major fa-code"></span></li>
+						<li><span class="icon style2 major fa-bolt"></span></li>
+						<li><span class="icon style3 major fa-trophy"></span></li>
+						<li><span class="icon style4 major fa-cog"></span></li>
+						<li><span class="icon style5 major fa-star"></span></li>
+						<li><span class="icon style6 major fa-gamepad"></span></li>
+					</ul>
+				</div>
+				<div class="6u$ 12u$(medium)">
+					<header class="major">
+						<h2>What we offer</h2>
+					</header>
+					<p> Easy integregation on your application, we provide JSON and XML</p>
+					<p> You can create your own achievements, leaderboards manage them easily. By adding, making updates or removing.</p>
+					<p> Integrate players in a leaderboard, and give achievements</p>
+					<p> Your are the boss you make the rules</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Footer -->
+	<section id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon alt fa-book"><span class="label">Swagger</span></a></li>
+			<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+			<li><a href="#" class="icon alt fa-envelope"><span class="label">Email</span></a></li>
+		</ul>
+		<ul class="copyright">
+			<li>&copy; Gamitop</li>
+			<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
+	</section>
+	<!-- Scripts -->
+	
+
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/gamitop.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	
 </body>
+
 </html>

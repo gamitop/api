@@ -91,24 +91,25 @@ public class Entities {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	/* @Produces(MediaType.APPLICATION_JSON) */
-	public Response addEntity(@FormParam("username") String username, @FormParam("email") String email,
+	public Response addEntity(@FormParam("name") String username, @FormParam("email") String email,
 			@FormParam("password") String password, @FormParam("name") String name, @FormParam("token") String token,
 			@Context UriInfo uriInfo) {
 
-		try {
+//		try {
 			EntityManager em = EntityManager.getInstance();
-			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
-			em.createEntity(name, email, username, password, null, null, null);
+			//Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			int id = EntityData.getInstance().getIEntity()+1;
+			em.createEntity(id,name, email, username, password, null, null, null);
 
 			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-			builder.path(name);
-			return Response.created(builder.build()).entity("Link:  " + builder).build();
+			builder.path(Integer.toString(id));
+			return Response.created(builder.build()).entity("Link:" + builder).build();
 			
 			
-		} catch (SignatureException e) {
-			return Response.serverError().status(401).type("text/plain")
-					.entity("You don't authorization to acess this!").build();
-		}
+//		} catch (SignatureException e) {
+//			return Response.serverError().status(401).type("text/plain")
+//					.entity("You don't authorization to acess this!").build();
+//		}
 
 	
 

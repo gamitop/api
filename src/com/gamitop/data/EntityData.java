@@ -129,7 +129,7 @@ public class EntityData {
 
 	public boolean auth(String email, String password) {
 
-		if (colEntity.find(and(eq("email", email), eq("password", password))) == null) {	
+		if (colEntity.find(and(eq("email", email), eq("password", password))).first() == null) {	
 			return false;
 		}
 		else {

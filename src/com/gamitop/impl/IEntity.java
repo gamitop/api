@@ -12,7 +12,7 @@ public interface IEntity {
 	/* GetListEntity*/	
 	public List<Entity> getEntities();
 	/* CreateEntity*/
-	public void createEntity( String name, String email, String username, String password, String link,
+	public void createEntity( int id,String name, String email, String username, String password, String link,
 			ArrayList<String> leaderboards2, ArrayList<String> achievements2);
 	/* UpdateEntity*/
 	public void updateEntity(int id, String name, String email, String username, String password, String link,

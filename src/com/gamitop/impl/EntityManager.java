@@ -67,15 +67,14 @@ public class EntityManager implements IEntity {
 	}
 
 	@Override
-	public void createEntity(String name, String email, String username, String password, String link,
+	public void createEntity(int id,String name, String email, String username, String password, String link,
 			ArrayList<String> leaderboards2, ArrayList<String> achievements2) {
 		// TODO Auto-generated method stub
 		ArrayList<String> leaderboards = new ArrayList<String>();
 		ArrayList<String> achievements = new ArrayList<String>();
 				
-		Random rand = new Random();
-		int random = rand.nextInt((100 - 1) + 1) + 1;
-		Entity entity = new Entity(random, name, email, username, password, "api/entity/3", leaderboards,achievements);
+		
+		Entity entity = new Entity(id, name, email, username, password, "api/entity/"+id, leaderboards,achievements);
 		//entities.add(entity);
 		
 		//MONGOdB
