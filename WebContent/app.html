@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>GAMITOP</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	
+	myToken = localStorage.token;
+	// Inserir jogo
+	
+		$.ajax({
+			  method: "GET",
+			  url: "http://localhost:8080/gamitop/api/entity?token="+myToken,
+			  headers: {
+			        "Accept":"application/xml",
+			        "Content-Type":"application/xml"
+			    }
+			})
+		  .done(function( msg ) {
+		      console.log( msg)
+		   
+		  });
+	
+});
+</script>
+</head>
+<body>
+
+</body>
+</html>

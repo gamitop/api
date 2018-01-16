@@ -7,6 +7,7 @@
  */
 package com.gamitop.impl;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,29 +16,23 @@ import java.util.Random;
 import com.gamitop.data.EntityData;
 import com.gamitop.model.Entity;
 
+import io.jsonwebtoken.impl.crypto.MacProvider;
+
 public class EntityManager implements IEntity {
 
 	static List<Entity> entities = new ArrayList<Entity>();
+	static Key key;
 
 	static EntityManager em = null;
 
 	public static EntityManager getInstance() {
-		ArrayList<String> leaderboards = new ArrayList<String>();
-		ArrayList<String> achievements = new ArrayList<String>();
+	
 		
 		if (em == null) {
 			em = new EntityManager();
+			key = MacProvider.generateKey();
+			
 
-			Entity e1 = new Entity(0, "Entidade1", "e1@gmail.com", "entidade1", "123456", "api/entity/0", leaderboards,achievements);
-			// Entity e2 = new Entity(1, "Entidade2", "e2@gmail.com", "entidade2", "123456",
-			// "api/entity/1", leaderboards);
-			// leaderboards.add("leade1");
-
-			entities.add(e1);
-			//entities.add(e2);
-			// leaderboards.add("leade2");
-
-			// entities.get(0).setLeaderboards(leaderboards);
 
 			// try {
 			// JAXBContext jaxbContext = JAXBContext.newInstance(Entity.class);
@@ -49,13 +44,15 @@ public class EntityManager implements IEntity {
 			// // TODO Auto-generated catch block
 			// e.printStackTrace();
 			// }
-			// PlayersManager pm = PlayersManager.getInstance();
-			// LeaderboardManager lm = LeaderboardManager.getInstance();
-			// AchievementsManager am = AchievementsManager.getInstance();
+
 
 		}
 		return em;
 	}
+	public Key getKey() {
+		return key;
+	}
+
 
 	public List<Entity> getEntities() {
 		EntityData e= EntityData.getInstance();
@@ -65,9 +62,7 @@ public class EntityManager implements IEntity {
 
 	@Override
 	public List<Entity> getEntity(int id) {
-
-		EntityData e= EntityData.getInstance();
-		
+		EntityData e= EntityData.getInstance();		
 		return e.getDataEntity(id);
 	}
 
@@ -97,20 +92,9 @@ public class EntityManager implements IEntity {
 
 	}
 
-	@Override
-	public void removeEntity(int id) {
-		
-//		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
-//			Entity entity = (Entity) iterator.next();
-//			if (entity.getId() == (id)) {
-//				 iterator.remove();
-//			
-//			}
-//		}
-		
+	@Override	public void removeEntity(int id) {		
 		EntityData e= EntityData.getInstance();
 		e.removeData(id);
-
 	}
 
 }

@@ -9,6 +9,7 @@ package com.gamitop.model;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "entity")
@@ -59,49 +60,56 @@ public class Entity {
 	public Entity() {
 		super();
 	}
+	@XmlElement
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	@XmlElement
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+	@XmlElement
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@XmlElement
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	@XmlElement
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@XmlElement
 	public String getLink() {
 		return link;
 	}
 	public void setLink(String link) {
 		this.link = link;
 	}
+	@XmlElement
 	public ArrayList<String> getLeaderboards() {
 		return leaderboards;
 	}
 	public void setLeaderboards(ArrayList<String> leaderboards) {
 		this.leaderboards = leaderboards;
 	}
-	
+	@XmlElement
 	public ArrayList<String> getAchievements() {
 		return achievements;
 	}

@@ -27,10 +27,14 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import com.gamitop.data.PlayerData;
+import com.gamitop.impl.EntityManager;
 import com.gamitop.impl.LeaderboardManager;
 import com.gamitop.impl.PlayersManager;
 import com.gamitop.model.Leaderboard;
 import com.gamitop.model.Player;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 
 @Path("/entity/{id_entity}/leaderboards")
 
@@ -50,16 +54,25 @@ public class Leaderboards {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	public Response addLeaderboard(@PathParam("id_entity") int entity, @FormParam("name") String name,
-			@FormParam("description") String description, @Context UriInfo uriInfo) {
+			@FormParam("description") String description, @Context UriInfo uriInfo, @FormParam("token") String token) {
 
-		LeaderboardManager lm = LeaderboardManager.getInstance();
-		ArrayList<String> players = new ArrayList<String>();
+		try {
 
-		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		builder.path(Integer.toString(0));
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+			builder.path(Integer.toString(0));
+			LeaderboardManager lm = LeaderboardManager.getInstance();
+			ArrayList<String> players = new ArrayList<String>();
 
-		lm.createLeaderboard(name, entity, description, builder.toString(), players);
-		return Response.created(builder.build()).entity("Link:  " + builder).build();
+			lm.createLeaderboard(name, entity, description, builder.toString(), players);
+			return Response.created(builder.build()).entity("Link:  " + builder).build();
+
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't authorization to acess this!").build();
+		}
+
 	}
 
 	// GET a specific entity
@@ -81,7 +94,7 @@ public class Leaderboards {
 	@PUT
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public String updateLeaderboard(@PathParam("id_entity") int idEntity,
-			@PathParam("id_leaderboard") int idLeaderboard) {
+			@PathParam("id_leaderboard") int idLeaderboard, @FormParam("token") String token) {
 
 		return "Entity Updated" + idEntity + "---" + idLeaderboard;
 
@@ -92,12 +105,20 @@ public class Leaderboards {
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
 	public Response deleteLeaderboard(@PathParam("id_entity") int idEntity,
-			@PathParam("id_leaderboard") int idLeaderboard) {
+			@PathParam("id_leaderboard") int idLeaderboard, @FormParam("token") String token) {
 
-		LeaderboardManager lm = LeaderboardManager.getInstance();//
-		lm.removeLeaderboard(idEntity, idLeaderboard);
+		try {
 
-		return Response.ok().entity("Leaderboard removed!").build();
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			LeaderboardManager lm = LeaderboardManager.getInstance();//
+			lm.removeLeaderboard(idEntity, idLeaderboard);
+			return Response.ok().entity("Leaderboard removed!").build();
+
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't authorization to acess this!").build();
+		}
 
 	}
 
@@ -120,16 +141,26 @@ public class Leaderboards {
 	@Consumes("application/x-www-form-urlencoded")
 	public Response addPlayers(@PathParam("id_entity") int entity, @PathParam("id_leaderboard") int id_leaderboard,
 			@FormParam("name") String name, @FormParam("score") int score, @FormParam("win") int win,
-			@FormParam("lose") int lose, @FormParam("totalGames") int totalGames, @Context UriInfo uriInfo) {
+			@FormParam("lose") int lose, @FormParam("totalGames") int totalGames, @FormParam("token") String token,
+			@Context UriInfo uriInfo) {
 
-		PlayersManager pm = PlayersManager.getInstance();
-		ArrayList<String> achievements = new ArrayList<String>();
+		try {
 
-		UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-		// builder.path(Integer.toString(id));
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+			builder.path(Integer.toString(0));
+			PlayersManager pm = PlayersManager.getInstance();
+			ArrayList<String> achievements = new ArrayList<String>();
 
-		pm.addPlayer(name, score, win, lose, totalGames, entity, id_leaderboard, builder.toString(), achievements);
-		return Response.created(builder.build()).entity("Link:  " + builder).build();
+			pm.addPlayer(name, score, win, lose, totalGames, entity, id_leaderboard, builder.toString(), achievements);
+			return Response.created(builder.build()).entity("Link:  " + builder).build();
+
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't authorization to acess this!").build();
+
+		}
 
 	}
 
@@ -151,10 +182,8 @@ public class Leaderboards {
 	@PUT
 	// @Produces(MediaType.APPLICATION_JSON)
 	public String updateEntity(@PathParam("id_entity") String idE, @PathParam("id_leaderboard") String idL,
-			@PathParam("id_player") String idP) {
-
+			@PathParam("id_player") String idP, @FormParam("token") String token) {
 		return "Entity Updated" + idE + "---" + idL + "---" + idP;
-
 	}
 
 	// DELETE a specific entity
@@ -162,12 +191,18 @@ public class Leaderboards {
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
 	public Response deletePlayer(@PathParam("id_entity") int id_Entity, @PathParam("id_leaderboard") int id_Leaderboard,
-			@PathParam("id_player") int id_Player) {
-
-		PlayerData p = PlayerData.getInstance();
-		p.removePlayer(id_Entity, id_Leaderboard, id_Player);
-		return Response.ok().entity("Player removed!").build();
-
+			@PathParam("id_player") int id_Player, @FormParam("token") String token) {
+		
+		try {
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			PlayerData p = PlayerData.getInstance();
+			p.removePlayer(id_Entity, id_Leaderboard, id_Player);
+			return Response.ok().entity("Player removed!").build();
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't authorization to acess this!").build();
+		}
 	}
 
 }
