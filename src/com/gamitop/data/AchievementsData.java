@@ -22,6 +22,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
 
 public class AchievementsData {
 
@@ -91,7 +92,7 @@ public class AchievementsData {
 			}
 		};
 		colAchievement.find().forEach(printBlock);
-		
+
 		// System.out.println(Collections.max(entities));
 		if (achievements.isEmpty()) {
 			id = -1;
@@ -102,10 +103,18 @@ public class AchievementsData {
 		return id;
 	}
 
-	public void removeAchievement(int id_entity, int id_Achievement) {
-		colAchievement.deleteOne(and(eq("entity", id_entity), eq("_id", id_Achievement)));
+	public boolean removeAchievement(int id_entity, int id_Achievement) {
+		DeleteResult result = colAchievement.deleteOne(and(eq("entity", id_entity), eq("_id", id_Achievement)));
 		colEntity.updateOne(eq("_id", id_entity),
 				Updates.pullByFilter(Filters.eq("achievements", Integer.toString(id_Achievement))));
+
+		if (result.getDeletedCount() > 0) {
+			colEntity.updateOne(eq("_id", id_entity),
+					Updates.pullByFilter(Filters.eq("achievements", Integer.toString(id_Achievement))));
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 

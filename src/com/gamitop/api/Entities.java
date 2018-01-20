@@ -119,10 +119,31 @@ public class Entities {
 	@Path("entity/{id_entity}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List<Entity> getEntity(@PathParam("id_entity") int id) {
-		EntityManager em = EntityManager.getInstance();
+	public Response getEntity(@PathParam("id_entity") int id,@QueryParam("token") String token) {
+		
+		
+		
+		
+		try {
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			List<Entity> list = new ArrayList<Entity>();
+			list = em.getEntity(id);
+			GenericEntity entity = new GenericEntity<List<Entity>>(list) {
+			};
+			if(list.isEmpty()==true) {
+				return Response.serverError().status(404).type("text/plain")
+						.entity("Not Found!").build();
+			}
+			else {
+				return Response.status(200).entity(entity).build();
+			}
 
-		return em.getEntity(id);
+			
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't authorization to acess this!").build();
+		}
 
 	}
 
@@ -139,17 +160,20 @@ public class Entities {
 	// DELETE a specific entity
 	@Path("entity/{id_entity}")
 	@DELETE
-	// @Produces(MediaType.APPLICATION_JSON)
+	@Consumes("application/x-www-form-urlencoded")
 	public Response deleteEntity(@PathParam("id_entity") int id, @FormParam("token") String token) {
 		
 		try {
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);			
-			em.removeEntity(id);	
-		
-			return Response.ok().entity("Entity removed!").build();
-			
-			
+			if (em.removeEntity(id)== true){
+				return Response.ok().entity("Entity removed!").build();
+			}
+			else {
+				return Response.serverError().status(404).type("text/plain")
+					.entity("Not exist!").build();
+			}		
+						
 		} catch (SignatureException e) {
 			return Response.serverError().status(401).type("text/plain")
 					.entity("You don't authorization to acess this!").build();

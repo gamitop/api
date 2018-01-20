@@ -15,7 +15,7 @@ public interface IAchievement {
 	/* UpdateEntity*/
 	public void updateAchievement( String name, int entity, String description, String link);
 	/* RemoveEntity */
-	public void removeAchievement(int id_Entity,int id_Leaderboard);
+	public boolean removeAchievement(int id_Entity,int id_Leaderboard);
 	
 	
 	

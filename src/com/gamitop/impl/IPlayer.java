@@ -23,7 +23,7 @@ public interface IPlayer {
 	
 	public void addPlayerAchievement(int idEntity,int id_achievement,int id_Player);
 	
-	public void removePlayerAchievement(int idEntity,int id_achievement, int id_Player);
+	public boolean removePlayerAchievement(int idEntity,int id_achievement, int id_Player);
 	
 	public List<Achievement> getPlayerAchievements(int id_Entity, int id_Player);
 	

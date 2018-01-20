@@ -91,9 +91,10 @@ public class EntityManager implements IEntity {
 
 	}
 
-	@Override	public void removeEntity(int id) {		
+	@Override	public boolean removeEntity(int id) {		
 		EntityData e= EntityData.getInstance();
-		e.removeData(id);
+		
+		return e.removeData(id);
 	}
 
 }

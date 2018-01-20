@@ -24,8 +24,10 @@ import com.gamitop.model.Leaderboard;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import com.mongodb.WriteResult;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 
 public class EntityData {
 
@@ -78,8 +80,16 @@ public class EntityData {
 		return entities;
 	}
 
-	public void removeData(int id) {
-		colEntity.deleteOne(eq("_id", id));
+	public boolean removeData(int id) {
+		
+		DeleteResult result = colEntity.deleteOne(eq("_id", id)) ;
+		
+		if (result.getDeletedCount()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 
 	}
 

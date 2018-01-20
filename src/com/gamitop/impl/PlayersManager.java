@@ -30,7 +30,7 @@ public class PlayersManager implements IPlayer {
 		}
 		return pm;
 	}
-
+ 
 	@Override
 	public void addPlayer(String name, int score, int win, int lose, int totalGames, int entity, int id_leaderboard,
 			String link, ArrayList<String> achievements) {
@@ -121,9 +121,9 @@ public class PlayersManager implements IPlayer {
 	}
 
 	@Override
-	public void removePlayerAchievement(int id_entity, int id_achievement, int id_player) {
+	public boolean removePlayerAchievement(int id_entity, int id_achievement, int id_player) {
 		PlayerData p = PlayerData.getInstance();
-		p.removePlayerAchievement(id_entity, id_achievement, id_player);
+		return p.removePlayerAchievement(id_entity, id_achievement, id_player);
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.model.Updates.*;
+import com.mongodb.client.result.DeleteResult;
 
 public class LeaderboardData {
 
@@ -96,9 +97,18 @@ public class LeaderboardData {
 		return Collections.max(entities);
 	}
 
-	public void removeLeaderboar(int id_entity, int id_leaderboard) {
-		colLeaderboard.deleteOne(and(eq("entity", id_entity), eq("_id", id_leaderboard)));
-		colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("leaderboards", id_leaderboard)));
+	public boolean removeLeaderboar(int id_entity, int id_leaderboard) {
+		DeleteResult result = colLeaderboard.deleteOne(and(eq("entity", id_entity), eq("_id", id_leaderboard)));
+		//colLeaderboard.deleteOne(and(eq("entity", id_entity), eq("_id", id_leaderboard)));
+		
+		if (result.getDeletedCount()>0) {			
+			colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("leaderboards", id_leaderboard)));
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 
 	}
 

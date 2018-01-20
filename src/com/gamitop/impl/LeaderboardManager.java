@@ -44,20 +44,12 @@ public class LeaderboardManager implements ILeaderboard {
 	}
 
 	@Override
-	public void createLeaderboard( String name, int idEntity, String description, String link,
+	public void createLeaderboard(int id ,String name, int idEntity, String description, String link,
 			ArrayList<String> players) {
 		
-		int size= LeaderboardData.getInstance().getIdLeaderboard()+1;
-		System.out.println(size);
-		Leaderboard l1 = new Leaderboard(size, name, idEntity, description, link, players);
-		//leaderboards.add(l1);
-		
-//		for (Iterator<Entity> iterator2 = EntityManager.entities.iterator(); iterator2.hasNext();) {
-//			Entity entity = (Entity) iterator2.next();
-//			if(entity.getId()==idEntity) {
-//				entity.getLeaderboards().add(Integer.toString(id));
-//			}			
-//		}		
+	
+		Leaderboard l1 = new Leaderboard(id, name, idEntity, description, link, players);
+			
 		LeaderboardData l= LeaderboardData.getInstance();
 		l.insertLeaderboard(l1, idEntity);
 		
@@ -71,36 +63,11 @@ public class LeaderboardManager implements ILeaderboard {
 	}
 
 	@Override
-	public void removeLeaderboard(int idEntity, int idLeaderboard) {
-//		for (Iterator<Leaderboard> iterator = leaderboards.iterator(); iterator.hasNext();) {
-//			Leaderboard leaderboard = (Leaderboard) iterator.next();
-//			System.out.println(idEntity + leaderboard.getEntity());
-//			if (leaderboard.getEntity() == idEntity && idLeaderboard == leaderboard.getId()) {
-//				iterator.remove();
+	public boolean removeLeaderboard(int idEntity, int idLeaderboard) {
 //
-//			}
-//		}
-//
-//		for (Iterator<Entity> iterator2 = EntityManager.entities.iterator(); iterator2.hasNext();) {
-//			Entity entity = (Entity) iterator2.next();
-//
-//			if (entity.getId() == idEntity) {
-//				
-//				for (Iterator<String> leader = entity.getLeaderboards().iterator(); leader.hasNext();) {
-//					
-//					String le = (String) leader.next();
-//					
-//					if (Integer.parseInt(le) == idLeaderboard) {
-//						leader.remove();
-//					}
-//
-//				}
-//			}
-//
-//		}
 		LeaderboardData l= LeaderboardData.getInstance();
-		l.removeLeaderboar(idEntity, idLeaderboard);
 		
+		return l.removeLeaderboar(idEntity, idLeaderboard);
 		
 	}
 

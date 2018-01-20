@@ -57,9 +57,9 @@ public class AchievementsManager implements IAchievement {
 	}
 
 	@Override
-	public void removeAchievement(int id_Entity, int id_Achievement) {	
+	public boolean removeAchievement(int id_Entity, int id_Achievement) {	
 		AchievementsData a = AchievementsData.getInstance();
-		a.removeAchievement(id_Entity, id_Achievement);		
+		return a.removeAchievement(id_Entity, id_Achievement);		
 
 	}
 

@@ -1,5 +1,6 @@
 package com.gamitop.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -13,15 +14,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import com.gamitop.data.AchievementsData;
+import com.gamitop.data.PlayerData;
 import com.gamitop.impl.AchievementsManager;
 import com.gamitop.impl.EntityManager;
 import com.gamitop.impl.PlayersManager;
 import com.gamitop.model.Achievement;
+import com.gamitop.model.Player;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
@@ -49,7 +54,8 @@ public class Achievements {
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
 			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-			builder.path(Integer.toString(0));
+			int id = AchievementsData.getInstance().getIdAchievement();
+			builder.path(Integer.toString(id));
 
 			am.createAchievement(name, id_entity, description, builder.toString());
 			return Response.created(builder.build()).entity("Link:  " + builder).build();
@@ -65,13 +71,19 @@ public class Achievements {
 	@Path("/{name}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List<Achievement> getAchievement(@PathParam("id_entity") int id_entity,
+	public Response getAchievement(@PathParam("id_entity") int id_entity,
 			@PathParam("id_achievement") int id_achievement) {
 
 		AchievementsManager am = AchievementsManager.getInstance();
-
-		// String output = "ListOfEntities";
-		return am.getAchievement(id_entity, id_achievement);
+		List<Achievement> list = new ArrayList<Achievement>();
+		list = am.getAchievement(id_entity, id_achievement);
+		GenericEntity entity = new GenericEntity<List<Achievement>>(list) {
+		};
+		if (list.isEmpty() == true) {
+			return Response.serverError().status(404).type("text/plain").entity("Not Found!").build();
+		} else {
+			return Response.status(200).entity(entity).build();
+		}
 
 	}
 
@@ -96,8 +108,11 @@ public class Achievements {
 			AchievementsManager am = AchievementsManager.getInstance();
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
-			am.removeAchievement(id_Entity, id_Achievement);
-			return Response.ok().entity("Achievement removed!").build();
+			if (am.removeAchievement(id_Entity, id_Achievement) == true) {
+				return Response.ok().entity("Achievement removed!").build();
+			} else {
+				return Response.serverError().status(401).type("text/plain").entity("Not Exist").build();
+			}
 
 		} catch (SignatureException e) {
 			return Response.serverError().status(401).type("text/plain")
@@ -117,9 +132,13 @@ public class Achievements {
 			PlayersManager pm = PlayersManager.getInstance();
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
-			pm.removePlayerAchievement(id_entity, id_achievement, id_player);
-			return Response.ok().entity("Achievement removed!").build();
-
+			if (pm.removePlayerAchievement(id_entity, id_achievement, id_player) == true) {
+				return Response.ok().entity("Achievement removed!").build();
+			} else {
+				return Response.serverError().status(404).type("text/plain")
+						.entity("Not Exist!").build();
+			}
+			
 		} catch (SignatureException e) {
 			return Response.serverError().status(401).type("text/plain")
 					.entity("You don't authorization to acess this!").build();
@@ -144,26 +163,26 @@ public class Achievements {
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
 	public Response addAchievementPlayer(@PathParam("id_player") int id_player, @PathParam("id_entity") int id_Entity,
-			@FormParam("id_achievement") int id_achievement, @FormParam("token") String token,@Context UriInfo uriInfo) {
-		
+			@FormParam("id_achievement") int id_achievement, @FormParam("token") String token,
+			@Context UriInfo uriInfo) {
+
 		try {
-		
+
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
 			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-			builder.path(Integer.toString(0));
-			
+			builder.path(Integer.toString(id_achievement));
+
 			PlayersManager pm = PlayersManager.getInstance();
 			pm.addPlayerAchievement(id_Entity, id_achievement, id_player);
 
-			
 			return Response.created(builder.build()).entity("Link:  " + builder).build();
 
 		} catch (SignatureException e) {
 			return Response.serverError().status(401).type("text/plain")
 					.entity("You don't authorization to acess this!").build();
 		}
-	
+
 	}
 
 }

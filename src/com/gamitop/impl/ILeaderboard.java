@@ -11,10 +11,10 @@ public interface ILeaderboard {
 	/* GetListEntity*/	
 	public List<Leaderboard> getLeaderboards(int idEntity);
 	/* CreateEntity*/
-	public void createLeaderboard( String name, int entity, String description, String link, ArrayList<String> players);
+	public void createLeaderboard( int id,String name, int entity, String description, String link, ArrayList<String> players);
 	/* UpdateEntity*/
 	public void updateLeaderboard(int id, String name, int entity, String description, String link, ArrayList<String> players);
 	/* RemoveEntity */
-	public void removeLeaderboard(int idEntity,int idLeaderboard);
+	public boolean removeLeaderboard(int idEntity,int idLeaderboard);
 
 }

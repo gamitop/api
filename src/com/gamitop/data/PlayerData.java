@@ -19,10 +19,13 @@ import com.gamitop.model.Player;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import com.mongodb.WriteResult;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 
 public class PlayerData {
 
@@ -106,10 +109,19 @@ public class PlayerData {
 		return id;
 	}
 
-	public void removePlayer(int id_entity, int id_leaderboard, int id_player) {
-		colPlayer.deleteOne(and(eq("entity", id_entity), eq("_id", id_player)));
-		colLeaderboard.updateOne(eq("_id", id_leaderboard),
-				Updates.pullByFilter(Filters.eq("players", Integer.toString(id_player))));
+	public boolean removePlayer(int id_entity, int id_leaderboard, int id_player) {
+		DeleteResult result =colPlayer.deleteOne(and(eq("entity", id_entity), eq("_id", id_player)));
+		
+		
+		if (result.getDeletedCount()>0) {			
+			colLeaderboard.updateOne(eq("_id", id_leaderboard),
+					Updates.pullByFilter(Filters.eq("players", Integer.toString(id_player))));
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 
 	}
 
@@ -122,23 +134,21 @@ public class PlayerData {
 		}
 	}
 
-	public void removePlayerAchievement(int id_entity, int id_achievement, int id_player) {
-		colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player)),
-				Updates.pullByFilter(Filters.eq("achievements", Integer.toString(id_achievement))));	
+	public boolean removePlayerAchievement(int id_entity, int id_achievement, int id_player) {
+		UpdateResult result=  colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player)),
+				Updates.pullByFilter(Filters.eq("achievements", Integer.toString(id_achievement))));
+		
+		if (result.getModifiedCount()>0) {
+			
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+		
+		
 	}
 
-//	public List<Achievement> getPlayerAchievement(int idEntity, int idPlayer) {
-//		final List<Achievement> achievementsPlayer = new ArrayList<Achievement>();
-//
-//		Block<Achievement> printBlock = new Block<Achievement>() {
-//			public void apply(final Achievement achievement) {
-//				achievementsPlayer.add(achievement);
-//			}
-//		};
-//
-//		colPlayer.find(and(eq("entity", idEntity), eq("leaderboard", idPlayer))).forEach(printBlock);
-//
-//		return achievementsPlayer;
-//	}
 
 }

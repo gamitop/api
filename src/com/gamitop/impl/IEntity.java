@@ -18,6 +18,6 @@ public interface IEntity {
 	public void updateEntity(int id, String name, String email, String username, String password, String link,
 			ArrayList<String> leaderboards2, ArrayList<String> achievements2);
 	/* RemoveEntity */
-	public void removeEntity(int id);
+	public boolean removeEntity(int id);
 
 }
