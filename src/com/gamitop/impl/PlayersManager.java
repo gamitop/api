@@ -54,10 +54,10 @@ public class PlayersManager implements IPlayer {
 	}
 
 	@Override
-	public void updatePlayer(String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
-			String link, ArrayList<String> achievements) {
-		// TODO Auto-generated method stub
+	public boolean updatePlayer(int id_player,int id_entity,int id_leaderboard,String name, int score, int win, int lose, int totalGames) {
+		PlayerData p= PlayerData.getInstance();
 
+		return p.updatePlayer(id_player, id_entity, id_leaderboard, name, score, win, lose, totalGames);
 	}
 
 	@Override

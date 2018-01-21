@@ -85,9 +85,12 @@ public class EntityManager implements IEntity {
 	}
 
 	@Override
-	public void updateEntity(int id, String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2, ArrayList<String> achievements2 ) {
+	public boolean updateEntity(int id, String name, String email, String username, String password ) {
 		// TODO Auto-generated method stub
+		
+		EntityData e= EntityData.getInstance();
+		return e.updateLeaderboard(id, name, email, username, password);
+	
 
 	}
 

@@ -51,8 +51,10 @@ public class AchievementsManager implements IAchievement {
 	}
 
 	@Override
-	public void updateAchievement(String name, int entity, String description, String link) {
-		// TODO Auto-generated method stub
+	public boolean updateAchievement(String name, int entity, int id_achievement, String description) {
+		AchievementsData a= AchievementsData.getInstance();
+		return a.updateAchievement(id_achievement, name, entity, description);
+		
 
 	}
 

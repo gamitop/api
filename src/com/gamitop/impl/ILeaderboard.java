@@ -13,7 +13,7 @@ public interface ILeaderboard {
 	/* CreateEntity*/
 	public void createLeaderboard( int id,String name, int entity, String description, String link, ArrayList<String> players);
 	/* UpdateEntity*/
-	public void updateLeaderboard(int id, String name, int entity, String description, String link, ArrayList<String> players);
+	public boolean updateLeaderboard(int id, String name, int entity, String description);
 	/* RemoveEntity */
 	public boolean removeLeaderboard(int idEntity,int idLeaderboard);
 

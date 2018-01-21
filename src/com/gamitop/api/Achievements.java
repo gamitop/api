@@ -24,6 +24,7 @@ import com.gamitop.data.AchievementsData;
 import com.gamitop.data.PlayerData;
 import com.gamitop.impl.AchievementsManager;
 import com.gamitop.impl.EntityManager;
+import com.gamitop.impl.LeaderboardManager;
 import com.gamitop.impl.PlayersManager;
 import com.gamitop.model.Achievement;
 import com.gamitop.model.Player;
@@ -68,7 +69,7 @@ public class Achievements {
 	}
 
 	// GET a specific entity
-	@Path("/{name}")
+	@Path("/{id_achievement}")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	public Response getAchievement(@PathParam("id_entity") int id_entity,
@@ -85,15 +86,32 @@ public class Achievements {
 			return Response.status(200).entity(entity).build();
 		}
 
-	}
+	} 
 
 	// PUT a specific entity
 	@Path("/{id_achievement}")
 	@PUT
 	@Consumes("application/x-www-form-urlencoded")
-	public String updateAchievement(@PathParam("id_entity") String id_entity,
-			@PathParam("id_achievement") String id_achievement, @FormParam("token") String token) {
-		return null;
+	public Response updateAchievement(@PathParam("id_entity") int id_entity,
+			@PathParam("id_achievement") int id_achievement, @FormParam("token") String token,@FormParam("name") String name,@FormParam("description") String description) {
+		try {
+
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			AchievementsManager am= AchievementsManager.getInstance();
+			if (am.updateAchievement(name, id_entity, id_achievement, description) == true) {
+
+				return Response.serverError().status(401).type("text/plain").entity("Achievement Updated !").build();
+
+			} else {
+				return Response.serverError().status(401).type("text/plain")
+						.entity("it's not possible to update achievement !").build();
+			}
+
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't have authorization to acess this!").build();
+		}
 
 	}
 
@@ -101,7 +119,7 @@ public class Achievements {
 	@Path("/{id_achievement}")
 	@DELETE
 	// @Produces(MediaType.APPLICATION_JSON)
-	public Response deleteAchievement(@PathParam("id_entity") int id_Entity, @PathParam("name") int id_Achievement,
+	public Response deleteAchievement(@PathParam("id_entity") int id_Entity, @PathParam("id_achievement") int id_Achievement,
 			@FormParam("token") String token) {
 
 		try {
@@ -135,10 +153,9 @@ public class Achievements {
 			if (pm.removePlayerAchievement(id_entity, id_achievement, id_player) == true) {
 				return Response.ok().entity("Achievement removed!").build();
 			} else {
-				return Response.serverError().status(404).type("text/plain")
-						.entity("Not Exist!").build();
+				return Response.serverError().status(404).type("text/plain").entity("Not Exist!").build();
 			}
-			
+
 		} catch (SignatureException e) {
 			return Response.serverError().status(401).type("text/plain")
 					.entity("You don't authorization to acess this!").build();

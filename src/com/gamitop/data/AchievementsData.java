@@ -23,6 +23,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 
 public class AchievementsData {
 
@@ -115,6 +116,23 @@ public class AchievementsData {
 		} else {
 			return false;
 		}
+
+	}
+	
+	public boolean updateAchievement(int id, String name, int entity, String description) {
+	//	DeleteResult result = colLeaderboard.deleteOne(and(eq("entity", id_entity), eq("_id", id_leaderboard)));
+		System.out.println(name);
+		UpdateResult result = colAchievement.updateOne(eq("_id", id), Updates.set("name",name));
+		UpdateResult result2 = colAchievement.updateOne(eq("_id", id), Updates.set("description",description));
+
+		if (result.getModifiedCount()>0) {			
+			//colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("leaderboards", id_leaderboard)));
+			return true;
+		}
+		else {
+			return false;
+		}
+//		
 
 	}
 

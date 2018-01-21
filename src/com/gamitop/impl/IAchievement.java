@@ -13,7 +13,7 @@ public interface IAchievement {
 	/* CreateEntity*/
 	public void createAchievement( String name, int entity, String description, String link);
 	/* UpdateEntity*/
-	public void updateAchievement( String name, int entity, String description, String link);
+	public boolean updateAchievement( String name, int entity, int id_achievement, String description);
 	/* RemoveEntity */
 	public boolean removeAchievement(int id_Entity,int id_Leaderboard);
 	

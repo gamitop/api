@@ -15,8 +15,7 @@ public interface IEntity {
 	public void createEntity( int id,String name, String email, String username, String password, String link,
 			ArrayList<String> leaderboards2, ArrayList<String> achievements2);
 	/* UpdateEntity*/
-	public void updateEntity(int id, String name, String email, String username, String password, String link,
-			ArrayList<String> leaderboards2, ArrayList<String> achievements2);
+	public boolean updateEntity(int id, String name, String email, String username, String password);
 	/* RemoveEntity */
 	public boolean removeEntity(int id);
 

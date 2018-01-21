@@ -16,8 +16,7 @@ public interface IPlayer {
 	public void addPlayer( String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
 			String link, ArrayList<String> achievements);
 	/* UpdateEntity*/
-	public void updatePlayer( String name, int score, int win, int lose, int totalGames, int entity, int leaderboard,
-			String link, ArrayList<String> achievements);
+	public boolean updatePlayer( int id_player,int id_entity,int id_leaderboard,String name, int score, int win, int lose, int totalGames);
 	/* RemoveEntity */
 	public void removePlayer(int id_Entity,int id_Leaderboard,int id_Player);
 	

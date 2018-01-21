@@ -27,7 +27,9 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.WriteResult;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 
 public class EntityData {
 
@@ -147,5 +149,24 @@ public class EntityData {
 		}
 		
 	}
+	public boolean updateLeaderboard(int id, String name, String email, String username, String password) {
+		//	DeleteResult result = colLeaderboard.deleteOne(and(eq("entity", id_entity), eq("_id", id_leaderboard)));
+			UpdateResult result = colEntity.updateOne(eq("_id", id), Updates.set("name",name));
+			colEntity.updateOne(eq("_id", id), Updates.set("email",email));
+			colEntity.updateOne(eq("_id", id), Updates.set("username",username));
+			colEntity.updateOne(eq("_id", id), Updates.set("password",password));
+			
+			
+
+			if (result.getModifiedCount()>0) {			
+				//colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("leaderboards", id_leaderboard)));
+				return true;
+			}
+			else {
+				return false;
+			}
+//			
+
+		}
 
 }

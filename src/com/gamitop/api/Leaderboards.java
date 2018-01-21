@@ -66,9 +66,9 @@ public class Leaderboards {
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
 
-			String id_Token = (String) Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token).getBody()
+			int id_Token = (Integer) Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token).getBody()
 					.get("_id");
-			if (Integer.parseInt(id_Token) == entity) {
+			if (id_Token == entity) {
 
 				int id = LeaderboardData.getInstance().getIdLeaderboard() + 1;
 				UriBuilder builder = uriInfo.getAbsolutePathBuilder();
@@ -78,7 +78,7 @@ public class Leaderboards {
 				ArrayList<String> players = new ArrayList<String>();
 				lm.createLeaderboard(id, name, entity, description, builder.toString(), players);
 
-				return Response.created(builder.build()).entity("Link:  " + builder).build();
+				return Response.created(builder.build()).type("text/plain").entity("Link:  " + builder).build();
 			} else {
 				return Response.serverError().status(401).type("text/plain")
 						.entity("You don't have authorization to create leaderboard !").build();
@@ -123,11 +123,29 @@ public class Leaderboards {
 	@Path("/{id_leaderboard}")
 	@PUT
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public String updateLeaderboard(@PathParam("id_entity") int idEntity,
-			@PathParam("id_leaderboard") int idLeaderboard, @FormParam("token") String token) {
+	public Response updateLeaderboard(@PathParam("id_entity") int idEntity,
+			@PathParam("id_leaderboard") int idLeaderboard,@FormParam("name") String nameLeaderboard,@FormParam("description") String description, @FormParam("token") String token) {
 
-		return "Entity Updated" + idEntity + "---" + idLeaderboard;
+		try {
 
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			LeaderboardManager lm = LeaderboardManager.getInstance();
+			if (lm.updateLeaderboard(idLeaderboard,nameLeaderboard, idEntity, description)== true) {
+				
+						
+				return Response.serverError().status(401).type("text/plain")
+						.entity("Leaderboard Updated !").build();
+				
+			} else {
+				return Response.serverError().status(401).type("text/plain")
+						.entity("You don't have authorization to create leaderboard !").build();
+			}
+
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't have authorization to acess this!").build();
+		}
 	}
 
 	// DELETE a specific entity
@@ -182,7 +200,8 @@ public class Leaderboards {
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
 			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-			builder.path(Integer.toString(0));
+			int id = PlayerData.getInstance().getIdPlayer() + 1;
+			builder.path(Integer.toString(id));
 			PlayersManager pm = PlayersManager.getInstance();
 			ArrayList<String> achievements = new ArrayList<String>();
 
@@ -201,12 +220,12 @@ public class Leaderboards {
 	@Path("/{id_leaderboard}/players/{id_player}")
 	@GET
 	// @Produces(MediaType.APPLICATION_JSON)
-	public Response getPlayer(@PathParam("id_entity") int id_Entity,
-			@PathParam("id_leaderboard") int id_Leaderboard, @PathParam("id_player") int id_Player) {
+	public Response getPlayer(@PathParam("id_entity") int id_Entity, @PathParam("id_leaderboard") int id_Leaderboard,
+			@PathParam("id_player") int id_Player) {
 
 		PlayerData p = PlayerData.getInstance();
 		List<Player> list = new ArrayList<Player>();
-		list =  p.getDataPlayer(id_Entity, id_Player, id_Leaderboard);
+		list = p.getDataPlayer(id_Entity, id_Player, id_Leaderboard);
 		GenericEntity entity = new GenericEntity<List<Player>>(list) {
 		};
 		if (list.isEmpty() == true) {
@@ -221,9 +240,34 @@ public class Leaderboards {
 	@Path("/{id_leaderboard}/players/{id_player}")
 	@PUT
 	// @Produces(MediaType.APPLICATION_JSON)
-	public String updatePlayer(@PathParam("id_entity") String idE, @PathParam("id_leaderboard") String idL,
-			@PathParam("id_player") String idP, @FormParam("token") String token) {
-		return "Entity Updated" + idE + "---" + idL + "---" + idP;
+	public Response updatePlayer(@PathParam("id_entity") int id_entity, @PathParam("id_leaderboard") int id_leaderboard,
+			@PathParam("id_player") int id_player, @FormParam("token") String token, @FormParam("name") String name,@FormParam("win") int win,@FormParam("totalGames") int totalGames,@FormParam("lose") int lose,@FormParam("score") int score) {
+		
+		
+		try {
+
+			EntityManager em = EntityManager.getInstance();
+			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
+			PlayersManager pm = PlayersManager.getInstance();
+			if (pm.updatePlayer(id_player, id_entity, id_leaderboard, name, score, win, lose, totalGames)== true) {
+				
+						
+				return Response.serverError().status(401).type("text/plain")
+						.entity("Player Updated !").build();
+				
+			} else {
+				return Response.serverError().status(401).type("text/plain")
+						.entity("It´s not possible to update the player !").build();
+			}
+
+		} catch (SignatureException e) {
+			return Response.serverError().status(401).type("text/plain")
+					.entity("You don't have authorization to acess this!").build();
+		}
+		
+		
+		
+		
 	}
 
 	// DELETE a specific entity
