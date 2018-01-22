@@ -21,7 +21,7 @@
 
 	<!-- One -->
 	<section id="one" class="main style1">
-		<div class="container">
+		<div id="container" class="container">
 			<h1> WELCOME TO THE APP</h1>
 
 		</div>
@@ -71,6 +71,8 @@
 				})
 				.done(function (msg) {
 					console.log(msg)
+					$("#container").load(msg)
+					
 
 				}).fail(function(error){
 					console.log(error)

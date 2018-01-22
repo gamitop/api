@@ -55,7 +55,7 @@ public class Achievements {
 			EntityManager em = EntityManager.getInstance();
 			Jwts.parser().setSigningKey(em.getKey()).parseClaimsJws(token);
 			UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-			int id = AchievementsData.getInstance().getIdAchievement();
+			int id = AchievementsData.getInstance().getIdAchievement()+1;
 			builder.path(Integer.toString(id));
 
 			am.createAchievement(name, id_entity, description, builder.toString());

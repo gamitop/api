@@ -84,7 +84,7 @@ public class LeaderboardData {
 
 
 	public int getIdLeaderboard() {
-		
+		int id;
 		final List<Integer> entities = new ArrayList<Integer>();
 		Block<Leaderboard> printBlock = new Block<Leaderboard>() {
 			public void apply(final Leaderboard lead) {
@@ -94,8 +94,13 @@ public class LeaderboardData {
 		};
 		colLeaderboard.find().forEach(printBlock);;
 		//System.out.println(Collections.max(entities));
-		
-		return Collections.max(entities);
+		if (entities.isEmpty()) {
+			id = -1;
+		} else {
+			id = Collections.max(entities);
+		}
+
+		return id;
 	}
 
 	public boolean removeLeaderboar(int id_entity, int id_leaderboard) {
