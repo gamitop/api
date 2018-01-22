@@ -153,16 +153,16 @@ public class PlayerData {
 	public boolean updatePlayer(int id_player,int id_entity,int id_leaderboard,String name, int score, int win, int lose, int totalGames) {
 		UpdateResult result=  colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
 				Updates.set("name",name));
-		colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
+		UpdateResult result2=  colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
 				Updates.set("win",win));
-		colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
+		UpdateResult result3=  colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
 				Updates.set("score",score));
-		colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
+		UpdateResult result4= colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
 				Updates.set("lose",lose));
-		colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
+		UpdateResult result5= colPlayer.updateOne(and(eq("entity", id_entity), eq("_id", id_player),eq("leaderboard", id_leaderboard)),
 				Updates.set("totalGames",totalGames));
 		
-		if (result.getModifiedCount()>0) {
+		if (result.getModifiedCount()>0 ||result2.getModifiedCount()>0 ||result3.getModifiedCount()>0 ||result4.getModifiedCount()>0 ||result5.getModifiedCount()>0 ) {
 			
 			return true;
 		}

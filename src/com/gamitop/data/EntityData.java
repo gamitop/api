@@ -152,13 +152,13 @@ public class EntityData {
 	public boolean updateLeaderboard(int id, String name, String email, String username, String password) {
 		//	DeleteResult result = colLeaderboard.deleteOne(and(eq("entity", id_entity), eq("_id", id_leaderboard)));
 			UpdateResult result = colEntity.updateOne(eq("_id", id), Updates.set("name",name));
-			colEntity.updateOne(eq("_id", id), Updates.set("email",email));
-			colEntity.updateOne(eq("_id", id), Updates.set("username",username));
-			colEntity.updateOne(eq("_id", id), Updates.set("password",password));
+			UpdateResult result2 = colEntity.updateOne(eq("_id", id), Updates.set("email",email));
+			UpdateResult result4 = colEntity.updateOne(eq("_id", id), Updates.set("username",username));
+			UpdateResult result3 =colEntity.updateOne(eq("_id", id), Updates.set("password",password));
 			
 			
 
-			if (result.getModifiedCount()>0) {			
+			if (result.getModifiedCount()>0|| result2.getModifiedCount()>0 || result3.getModifiedCount()>0|| result4.getModifiedCount()>0) {			
 				//colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("leaderboards", id_leaderboard)));
 				return true;
 			}

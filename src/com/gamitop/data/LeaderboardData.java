@@ -118,7 +118,7 @@ public class LeaderboardData {
 		UpdateResult result = colLeaderboard.updateOne(eq("_id", id), Updates.set("name",name));
 		UpdateResult result2 = colLeaderboard.updateOne(eq("_id", id), Updates.set("description",description));
 
-		if (result.getModifiedCount()>0) {			
+		if (result.getModifiedCount()>0 || result2.getModifiedCount()>0) {			
 			//colEntity.updateOne(eq("_id", id_entity), Updates.pullByFilter(Filters.eq("leaderboards", id_leaderboard)));
 			return true;
 		}
