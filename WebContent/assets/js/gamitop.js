@@ -122,7 +122,7 @@
          }
 
          generalAJax("DELETE", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard, data);
-     }); 
+     });
 
      $("#addPlayer").click(function () {
          var id_Entity = $('head').attr('id')
@@ -176,7 +176,7 @@
          console.log(data)
 
          generalAJax("DELETE", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player, data);
-     });
+     }); 
 
      $("#createAchievement").click(function () {
 
@@ -220,6 +220,12 @@
          console.log(data)
 
          generalAJax("DELETE", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/achievements/" + id_Achievement, data);
+         
+     });
+
+
+     $("#logout").click(function () {
+        window.localStorage.clear()
      });
 
      $("#leaderboardName").change(function () {

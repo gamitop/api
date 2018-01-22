@@ -1,4 +1,4 @@
-/*!
+ /*!
  * Start Bootstrap - SB Admin v4.0.0-beta.2 (https://startbootstrap.com/template-overviews/sb-admin)
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-sb-admin/blob/master/LICENSE)
@@ -49,7 +49,7 @@ body.fixed-nav {
 }
 
 .scroll-to-top:hover {
-    background: #343a40
+    background: orange
 }
 
 .scroll-to-top i {
@@ -340,11 +340,11 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
-    color: #868e96
+    color: white
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item>.nav-link {
-    color: #868e96
+    color: white
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item>.nav-link:hover {
@@ -353,7 +353,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a,
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a {
-    color: #868e96
+    color: white
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a:focus,
@@ -369,7 +369,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 
 @media (min-width:992px) {
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
-        background: #343a40
+        background: orange
     }
     #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a {
         color: #fff!important;

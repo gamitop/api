@@ -1,4 +1,4 @@
-/*!
+ /*!
  * Bootstrap v4.0.0-beta.2 (https://getbootstrap.com)
  * Copyright 2011-2017 The Bootstrap Authors
  * Copyright 2011-2017 Twitter, Inc.
@@ -5720,9 +5720,6 @@ a.bg-light:focus, a.bg-light:hover {
   background-color: #dae0e5 !important;
 }
 
-.bg-dark {
-  background-color: #343a40 !important;
-}
 
 a.bg-dark:focus, a.bg-dark:hover {
   background-color: #1d2124 !important;
