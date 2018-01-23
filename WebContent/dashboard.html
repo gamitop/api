@@ -218,7 +218,7 @@
         console.log("ola")
         $.ajax({
             method: "GET",
-            url: "http://localhost:8080/gamitop/api/getID?token=" + myToken,
+            url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/getID?token=" + myToken,
 
           })
           .done(function (msg) {
@@ -232,7 +232,7 @@
             console.log("id" + id_Entity);
             $.ajax({
                 method: "GET",
-                url: "http://localhost:8080/gamitop/api/entity/" + id_Entity + "?token=" + myToken,
+                url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "?token=" + myToken,
                 headers: {
                   "Accept": "application/json",
                   "Content-Type": "application/json"

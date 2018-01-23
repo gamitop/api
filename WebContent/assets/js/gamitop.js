@@ -9,7 +9,7 @@
      //     login: $("#txtLogin").val(),
      //     pass: $("#txtPass").val(),
      //   }
-     //   var url = "http://localhost:8080/gamitop/api/entity?token=" + myToken
+     //   var url = "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity?token=" + myToken
 
 
 
@@ -18,7 +18,7 @@
              " pass:" + $("#password").val())
          $.ajax({
                  method: "POST",
-                 url: "http://localhost:8080/gamitop/api/auth",
+                 url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/auth",
                  data: {
                      login: $("#email").val(),
                      pass: $("#password").val(),
@@ -44,7 +44,7 @@
          console.log("aa")
          $.ajax({
                  method: "POST",
-                 url: "http://localhost:8080/gamitop/api/entity",
+                 url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity",
                  data: {
                      name: $("#name").val(),
                      email: $("#email").val(),
@@ -92,7 +92,7 @@
          }
          console.log(data)
 
-         generalAJax("POST", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards", data);
+         generalAJax("POST", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards", data);
 
      });
 
@@ -108,7 +108,7 @@
          }
          console.log(data)
 
-         generalAJax("PUT", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard, data);
+         generalAJax("PUT", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard, data);
      });
 
 
@@ -121,7 +121,7 @@
              token: myToken
          }
 
-         generalAJax("DELETE", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard, data);
+         generalAJax("DELETE", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard, data);
          window.location.reload();
          
      });
@@ -141,7 +141,7 @@
          }
          console.log(data)
 
-         generalAJax("POST", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players", data);
+         generalAJax("POST", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players", data);
 
      });
 
@@ -162,7 +162,7 @@
          }
          console.log(data)
 
-         generalAJax("PUT", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player, data);
+         generalAJax("PUT", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player, data);
      });
 
 
@@ -177,7 +177,7 @@
          }
          console.log(data)
 
-         generalAJax("DELETE", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player, data);
+         generalAJax("DELETE", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player, data);
          window.location.reload();
      }); 
 
@@ -193,7 +193,7 @@
          }
          console.log(data)
 
-         generalAJax("POST", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/achievements", data);
+         generalAJax("POST", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/achievements", data);
      });
 
      $("#updateAchievement").click(function () {
@@ -208,7 +208,7 @@
          }
          console.log(data)
 
-         generalAJax("PUT", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/achievements/" + id_Achievement, data);
+         generalAJax("PUT", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/achievements/" + id_Achievement, data);
      });
 
 
@@ -222,7 +222,7 @@
          }
          console.log(data)
 
-         generalAJax("DELETE", "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/achievements/" + id_Achievement, data);
+         generalAJax("DELETE", "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/achievements/" + id_Achievement, data);
          window.location.reload();
          
      });
@@ -237,7 +237,7 @@
          var id_Leaderboard = $('#leaderboardName').val()
          $.ajax({
                  method: "GET",
-                 url: "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "?token=" + myToken,
+                 url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "?token=" + myToken,
                  headers: {
                      "Accept": "application/json",
                      "Content-Type": "application/json"
@@ -272,7 +272,7 @@
 
          $.ajax({
                  method: "GET",
-                 url: "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players?token=" + myToken,
+                 url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players?token=" + myToken,
                  headers: {
                      "Accept": "application/json",
                      "Content-Type": "application/json"
@@ -315,7 +315,7 @@
          var id_Player = $('#playerName').val()
          $.ajax({
                  method: "GET",
-                 url: "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player + "?token=" + myToken,
+                 url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/leaderboards/" + id_Leaderboard + "/players/" + id_Player + "?token=" + myToken,
                  headers: {
                      "Accept": "application/json",
                      "Content-Type": "application/json"
@@ -348,7 +348,7 @@
          var id_Achievement = $('#achievementName').val()
          $.ajax({
                  method: "GET",
-                 url: "http://localhost:8080/gamitop/api/entity/" + id_Entity + "/achievements/" + id_Achievement + "?token=" + myToken,
+                 url: "http://trabalhos.esmad.ipp.pt:8080/gamitop-api/api/entity/" + id_Entity + "/achievements/" + id_Achievement + "?token=" + myToken,
                  headers: {
                      "Accept": "application/json",
                      "Content-Type": "application/json"
